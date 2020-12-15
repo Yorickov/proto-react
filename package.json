@@ -1,0 +1,27 @@
+{
+  "name": "proto-react",
+  "version": "0.1.0",
+  "description": "",
+  "scripts": {},
+  "dependencies": {
+    "css-loader": "^5.0.1",
+    "sass": "^1.30.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "*",
+    "@babel/preset-env": "*",
+    "babel-eslint": "*",
+    "babel-loader": "*",
+    "copy-webpack-plugin": "^7.0.0",
+    "eslint": "*",
+    "eslint-config-airbnb": "*",
+    "eslint-plugin-babel": "*",
+    "eslint-plugin-import": "*",
+    "html-webpack-plugin": "*",
+    "webpack": "*",
+    "webpack-cli": "*",
+    "webpack-dev-server": "*"
+  }
+}
