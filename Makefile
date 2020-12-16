@@ -12,6 +12,6 @@ lint:
 	npx eslint .
 
 push:
-	git push -u origin master
+	git push -u origin main
 
 .PHONY: test
