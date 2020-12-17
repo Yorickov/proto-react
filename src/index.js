@@ -1,5 +1,4 @@
 import './common.scss';
-import render from './render.js';
-import App from './app.js';
+import app from './app.js';
 
-render(App(), document.getElementById('container'));
+app();

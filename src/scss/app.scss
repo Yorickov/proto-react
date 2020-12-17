@@ -23,6 +23,27 @@ body {
   border-radius: 6px;
   margin-bottom: 10px;
 }
+  .value {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 15px;
+  }
+
+  .icon {
+    display: inline-block;
+    vertical-align: middle;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+  }
+
+  .icon.day {
+    background-color: #ef7b00;
+  }
+
+  .icon.night {
+    background-color: #2459a7;
+  }
 
 .lot {
   padding: 15px;

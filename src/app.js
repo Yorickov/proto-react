@@ -1,22 +1,5 @@
 import LogoImg from './images/logo.png';
-
-const state = {
-  time: new Date(),
-  lots: [
-    {
-      id: 1,
-      name: 'Apple',
-      description: 'Apple description',
-      price: 16
-    },
-    {
-      id: 2,
-      name: 'Orange',
-      description: 'Orange description',
-      price: 41
-    }
-  ]
-}
+import render from './render.js';
 
 const Logo = () => (`
   <img class="logo" src=${LogoImg}></img>
@@ -28,11 +11,19 @@ const Header = () => (`
   </header>
 `);
 
-const Clock = ({ time }) => (`
-  <div class="clock">
-    ${time.toLocaleTimeString()}
-  </div>
-`);
+const Clock = ({ time }) => {
+  const className = (time.getHours() >= 7 && time.getHours() <= 21)
+    ? 'icon day' : 'icon night';
+
+  return `
+    <div class="clock">
+      <span class="value">
+        ${time.toLocaleTimeString()}
+      </span>
+      <span class="${className}"></span>
+    </div>
+  `
+};
 
 const Lot = ({ lot }) => (`
   <article class="lot">
@@ -60,4 +51,40 @@ const App = (state) => {
   return node;
 };
 
-export default App.bind(null, state);
+const renderView = (state) => {
+  render(
+    App(state),
+    document.getElementById('root')
+  )
+};
+
+export default () => {
+  let state = {
+    time: new Date(),
+    lots: [
+      {
+        id: 1,
+        name: 'Apple',
+        description: 'Apple description',
+        price: 16
+      },
+      {
+        id: 2,
+        name: 'Orange',
+        description: 'Orange description',
+        price: 41
+      }
+    ]
+  }
+
+  renderView(state);
+
+  setInterval(() => {
+    state = {
+      ...state,
+      time: new Date(),
+    }
+
+    renderView(state);
+  }, 1000);
+};
