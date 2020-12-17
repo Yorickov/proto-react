@@ -1,4 +1,6 @@
+import app from './app';
+
 export default () => {
-  const element = document.getElementById('container');
-  element.textContent = 'Hi!';
+  const domRoot = document.getElementById('container');
+  domRoot.innerHTML = app();
 };

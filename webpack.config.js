@@ -6,6 +6,7 @@ module.exports = {
   output: {
     path: __dirname + '/public',
     filename: '[name].bundle.js',
+    assetModuleFilename: 'images/[hash][ext][query]',
   },
   mode: process.env.NODE_ENV || 'development',
   module: {
@@ -33,6 +34,10 @@ module.exports = {
             loader: 'sass-loader',
           },
         ],
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
     ],
   },
