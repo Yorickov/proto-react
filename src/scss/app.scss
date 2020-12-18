@@ -28,7 +28,6 @@ body {
     vertical-align: middle;
     margin-right: 15px;
   }
-
   .icon {
     display: inline-block;
     vertical-align: middle;
@@ -36,11 +35,9 @@ body {
     height: 15px;
     border-radius: 15px;
   }
-
   .icon.day {
     background-color: #ef7b00;
   }
-
   .icon.night {
     background-color: #2459a7;
   }
@@ -63,4 +60,11 @@ body {
 
   p {
     margin: 0;
+  }
+
+  .loading {
+    padding: 15px;
+    border-radius: 6px;
+    background: #eee;
+    text-align: center;
   }

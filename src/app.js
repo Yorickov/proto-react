@@ -1,5 +1,6 @@
 import LogoImg from './images/logo.png';
-import render from './render.js';
+import { render, loading } from './lib/utils.js';
+import api from './lib/api.js';
 
 const Logo = () => (`
   <img class="logo" src=${LogoImg}></img>
@@ -33,11 +34,17 @@ const Lot = ({ lot }) => (`
   </article>
 `);
 
-const Lots = ({ lots }) => (`
-  <div class="lots">
-    ${lots.map((lot) => Lot({ lot })).join('')}
-  </div>
-`);
+const Lots = ({ lots }) => {
+  if (lots === null) {
+    return loading();
+  }
+
+  return `
+    <div class="lots">
+      ${lots.map((lot) => Lot({ lot })).join('')}
+    </div>
+  `;
+};
 
 const App = (state) => {
   const node = document.createElement('div');
@@ -61,20 +68,7 @@ const renderView = (state) => {
 export default () => {
   let state = {
     time: new Date(),
-    lots: [
-      {
-        id: 1,
-        name: 'Apple',
-        description: 'Apple description',
-        price: 16
-      },
-      {
-        id: 2,
-        name: 'Orange',
-        description: 'Orange description',
-        price: 41
-      }
-    ]
+    lots: null,
   }
 
   renderView(state);
@@ -87,4 +81,13 @@ export default () => {
 
     renderView(state);
   }, 1000);
+
+  api.get('/lots').then((lots) => {
+    state = {
+      ...state,
+      lots,
+    }
+
+    renderView(state);
+  });
 };
