@@ -5,6 +5,6 @@ export const render = (vdom, domRoot) => {
 
 export const loading = () => (`
   <div class="loading">
-    "Loading..."
+    Loading...
   </div>
 `);

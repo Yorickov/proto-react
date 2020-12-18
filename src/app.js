@@ -89,5 +89,19 @@ export default () => {
     }
 
     renderView(state);
+
+    setInterval(() => {
+      state = {
+        ...state,
+        lots: state.lots.map((lot) => {
+          return {
+            ...lot,
+            price: Math.round((Math.random() * 10 + 30)),
+          };
+        }),
+      };
+
+      renderView(state);
+    }, 400);
   });
 };
