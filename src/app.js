@@ -71,12 +71,11 @@ const renderView = (state) => {
   )
 };
 
-export default () => {
+export default async () => {
   let state = {
     time: new Date(),
     lots: null,
   }
-
   renderView(state);
 
   setInterval(() => {
@@ -84,32 +83,28 @@ export default () => {
       ...state,
       time: new Date(),
     }
-
     renderView(state);
   }, 1000);
 
-  api.get('/lots').then((lots) => {
+  const lots = await api.get('/lots');
+  state = {
+    ...state,
+    lots,
+  }
+  renderView(state);
+
+  const onPrice = (data) => {
     state = {
       ...state,
-      lots,
+      lots: state.lots.map((lot) => (
+        lot.id === data.id ?
+          ({ ...lot, price: data.price }) : lot
+      )),
     }
-
     renderView(state);
+  };
 
-    const onPrice = (data) => {
-      state = {
-        ...state,
-        lots: state.lots.map((lot) => (
-          lot.id === data.id ?
-            ({ ...lot, price: data.price }) : lot
-        )),
-      }
-
-      renderView(state);
-    };
-
-    lots.forEach((lot) => {
-      stream.subscribe(`price-${lot.id}`, onPrice);
-    });
+  lots.forEach((lot) => {
+    stream.subscribe(`price-${lot.id}`, onPrice);
   });
 };
