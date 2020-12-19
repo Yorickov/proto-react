@@ -3,8 +3,17 @@ export const render = (vdom, domRoot) => {
   domRoot.append(vdom);
 };
 
-export const loading = () => (`
-  <div class="loading">
-    Loading...
-  </div>
-`);
+export const stream = {
+  subscribe (channel, listener) {
+    const match = /price-(\d+)/.exec(channel);
+
+    if (match) {
+      setInterval(() => {
+        listener({
+          id: parseInt(match[1]),
+          price: Math.round((Math.random() * 10 + 30)),
+        });
+      }, 500);
+    }
+  }
+};

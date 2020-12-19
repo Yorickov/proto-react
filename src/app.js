@@ -1,5 +1,5 @@
 import LogoImg from './images/logo.png';
-import { render, loading } from './lib/utils.js';
+import { render, stream } from './lib/utils.js';
 import api from './lib/api.js';
 
 const Logo = () => (`
@@ -10,6 +10,12 @@ const Header = () => (`
   <header class="header">
     ${Logo()}
   </header>
+`);
+
+export const Loading = () => (`
+  <div class="loading">
+    Loading...
+  </div>
 `);
 
 const Clock = ({ time }) => {
@@ -36,7 +42,7 @@ const Lot = ({ lot }) => (`
 
 const Lots = ({ lots }) => {
   if (lots === null) {
-    return loading();
+    return Loading();
   }
 
   return `
@@ -90,18 +96,20 @@ export default () => {
 
     renderView(state);
 
-    setInterval(() => {
+    const onPrice = (data) => {
       state = {
         ...state,
-        lots: state.lots.map((lot) => {
-          return {
-            ...lot,
-            price: Math.round((Math.random() * 10 + 30)),
-          };
-        }),
-      };
+        lots: state.lots.map((lot) => (
+          lot.id === data.id ?
+            ({ ...lot, price: data.price }) : lot
+        )),
+      }
 
       renderView(state);
-    }, 400);
+    };
+
+    lots.forEach((lot) => {
+      stream.subscribe(`price-${lot.id}`, onPrice);
+    });
   });
 };

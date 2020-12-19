@@ -21,7 +21,7 @@ export default {
           }, 1000)
         })
       default:
-        throw new Error('Unknown address')
+        return Promise.reject(new Error('Unknown address'));
     }
   }
 };
