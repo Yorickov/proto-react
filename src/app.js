@@ -1,5 +1,6 @@
 import LogoImg from './images/logo.png';
-import { render, stream, createNode } from './lib/utils';
+import { stream, createNode } from './lib/utils';
+import render from './lib/render';
 import api from './lib/api';
 
 const Logo = () => (
@@ -30,6 +31,7 @@ const Clock = ({ time }) => {
 
 const Lot = ({ lot }) => {
   const node = createNode('article', ['lot']);
+  node.dataset.key = lot.id;
   const price = createNode('div', ['price'], lot.price);
   const name = createNode('h1', [], lot.name);
   const description = createNode('p', [], lot.description);

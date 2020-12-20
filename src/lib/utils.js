@@ -1,8 +1,3 @@
-export const render = (vdom, domRoot) => {
-  domRoot.innerHTML = '';
-  domRoot.append(vdom);
-};
-
 export const stream = {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);

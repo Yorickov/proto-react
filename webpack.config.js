@@ -9,6 +9,7 @@ module.exports = {
     assetModuleFilename: 'images/[hash][ext][query]',
   },
   mode: process.env.NODE_ENV || 'development',
+  devtool: 'source-map',
   module: {
     rules: [
       {
