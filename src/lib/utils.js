@@ -4,16 +4,16 @@ export const render = (vdom, domRoot) => {
 };
 
 export const stream = {
-  subscribe (channel, listener) {
-    const match = /price-(\d+)/.exec(channel);
+  subscribe(channel, listener) {
+    const match = channel.match(/price-(\d+)/);
 
     if (match) {
       setInterval(() => {
         listener({
-          id: parseInt(match[1]),
+          id: parseInt(match[1], 10),
           price: Math.round((Math.random() * 10 + 30)),
         });
       }, 500);
     }
-  }
+  },
 };

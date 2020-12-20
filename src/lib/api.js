@@ -1,5 +1,5 @@
 export default {
-  get (url) {
+  get(url) {
     switch (url) {
       case '/lots':
         return new Promise((resolve) => {
@@ -9,19 +9,19 @@ export default {
                 id: 1,
                 name: 'Apple',
                 description: 'Apple description',
-                price: 16
+                price: 16,
               },
               {
                 id: 2,
                 name: 'Orange',
                 description: 'Orange description',
-                price: 41
-              }
-            ])
-          }, 1000)
-        })
+                price: 41,
+              },
+            ]);
+          }, 1000);
+        });
       default:
         return Promise.reject(new Error('Unknown address'));
     }
-  }
+  },
 };

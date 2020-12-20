@@ -1,9 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: __dirname + '/public',
+    path: path.resolve(__dirname, '/public'),
     filename: '[name].bundle.js',
     assetModuleFilename: 'images/[hash][ext][query]',
   },
@@ -16,8 +17,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
-          }
+            presets: ['@babel/preset-env'],
+          },
         },
       },
       {

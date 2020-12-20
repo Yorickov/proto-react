@@ -1,6 +1,6 @@
 import LogoImg from './images/logo.png';
-import { render, stream } from './lib/utils.js';
-import api from './lib/api.js';
+import { render, stream } from './lib/utils';
+import api from './lib/api';
 
 const Logo = () => (`
   <img class="logo" src=${LogoImg}></img>
@@ -29,7 +29,7 @@ const Clock = ({ time }) => {
       </span>
       <span class="${className}"></span>
     </div>
-  `
+  `;
 };
 
 const Lot = ({ lot }) => (`
@@ -58,7 +58,7 @@ const App = (state) => {
   node.innerHTML = [
     Header(),
     Clock({ time: state.time }),
-    Lots({ lots: state.lots })
+    Lots({ lots: state.lots }),
   ].join('');
 
   return node;
@@ -67,22 +67,22 @@ const App = (state) => {
 const renderView = (state) => {
   render(
     App(state),
-    document.getElementById('root')
-  )
+    document.getElementById('root'),
+  );
 };
 
 export default async () => {
   let state = {
     time: new Date(),
     lots: null,
-  }
+  };
   renderView(state);
 
   setInterval(() => {
     state = {
       ...state,
       time: new Date(),
-    }
+    };
     renderView(state);
   }, 1000);
 
@@ -90,17 +90,16 @@ export default async () => {
   state = {
     ...state,
     lots,
-  }
+  };
   renderView(state);
 
   const onPrice = (data) => {
     state = {
       ...state,
       lots: state.lots.map((lot) => (
-        lot.id === data.id ?
-          ({ ...lot, price: data.price }) : lot
+        lot.id === data.id ? ({ ...lot, price: data.price }) : lot
       )),
-    }
+    };
     renderView(state);
   };
 
