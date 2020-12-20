@@ -17,3 +17,17 @@ export const stream = {
     }
   },
 };
+
+export const createNode = (tag, classes = [], textContent = null, attrs = {}) => {
+  const node = document.createElement(tag);
+  node.classList.add(...classes);
+  if (textContent) {
+    node.innerText = textContent;
+  }
+  if (attrs) {
+    Object.keys(attrs).forEach((key) => {
+      node.setAttribute(key, attrs[key]);
+    });
+  }
+  return node;
+};

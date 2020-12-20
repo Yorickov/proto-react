@@ -1,65 +1,63 @@
 import LogoImg from './images/logo.png';
-import { render, stream } from './lib/utils';
+import { render, stream, createNode } from './lib/utils';
 import api from './lib/api';
 
-const Logo = () => (`
-  <img class="logo" src=${LogoImg}></img>
-`);
+const Logo = () => (
+  createNode('img', ['logo'], null, { src: `${LogoImg}` })
+);
 
-const Header = () => (`
-  <header class="header">
-    ${Logo()}
-  </header>
-`);
-
-export const Loading = () => (`
-  <div class="loading">
-    Loading...
-  </div>
-`);
-
-const Clock = ({ time }) => {
-  const className = (time.getHours() >= 7 && time.getHours() <= 21)
-    ? 'icon day' : 'icon night';
-
-  return `
-    <div class="clock">
-      <span class="value">
-        ${time.toLocaleTimeString()}
-      </span>
-      <span class="${className}"></span>
-    </div>
-  `;
+const Header = () => {
+  const node = createNode('header', ['header']);
+  node.append(Logo());
+  return node;
 };
 
-const Lot = ({ lot }) => (`
-  <article class="lot">
-    <div class="price">${lot.price}</div>
-    <h1>${lot.name}</h1>
-    <p>${lot.description}</p>
-  </article>
-`);
+export const Loading = () => (
+  createNode('div', ['loading'], 'Loading...')
+);
+
+const Clock = ({ time }) => {
+  const node = createNode('div', ['clock']);
+  const value = createNode('span', ['value'], time.toLocaleTimeString());
+
+  const iconClasses = (time.getHours() >= 7 && time.getHours() <= 21)
+    ? ['icon', 'day'] : ['icon', 'night'];
+  const icon = createNode('span', iconClasses);
+
+  node.append(value, icon);
+  return node;
+};
+
+const Lot = ({ lot }) => {
+  const node = createNode('article', ['lot']);
+  const price = createNode('div', ['price'], lot.price);
+  const name = createNode('h1', [], lot.name);
+  const description = createNode('p', [], lot.description);
+
+  node.append(price, name, description);
+  return node;
+};
 
 const Lots = ({ lots }) => {
   if (lots === null) {
     return Loading();
   }
 
-  return `
-    <div class="lots">
-      ${lots.map((lot) => Lot({ lot })).join('')}
-    </div>
-  `;
+  const node = createNode('div', ['lots']);
+  lots.forEach((lot) => {
+    node.append(Lot({ lot }));
+  });
+
+  return node;
 };
 
 const App = (state) => {
-  const node = document.createElement('div');
-  node.className = 'app';
-  node.innerHTML = [
+  const node = createNode('div', ['app']);
+  node.append(
     Header(),
     Clock({ time: state.time }),
     Lots({ lots: state.lots }),
-  ].join('');
+  );
 
   return node;
 };
