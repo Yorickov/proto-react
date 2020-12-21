@@ -1,33 +1,53 @@
 const createRealNodeByVirtual = (virtual) => {
-  if (virtual.nodeType === Node.TEXT_NODE) {
+  if (typeof virtual !== 'object') {
     return document.createTextNode('');
   }
-  return document.createElement(virtual.tagName);
+  return document.createElement(virtual.type);
+};
+
+const evaluate = (virtualNode) => {
+  if (typeof virtualNode !== 'object') {
+    return virtualNode;
+  }
+
+  if (typeof virtualNode.type === 'function') {
+    return evaluate((virtualNode.type)(virtualNode.props));
+  }
+
+  const props = virtualNode.props || {};
+
+  return {
+    ...virtualNode,
+    props: {
+      ...props,
+      children: Array.isArray(props.children)
+        ? props.children.map(evaluate) : [evaluate(props.children)],
+    },
+  };
 };
 
 const sync = (virtualNode, realNode) => {
   // Sync element
-  if (virtualNode.className !== realNode.className) {
-    realNode.className = virtualNode.className;
-  }
-  if (virtualNode.attributes) {
-    [...virtualNode.attributes].forEach((attr) => {
-      if (!(attr.value === realNode[attr.name])) {
-        realNode[attr.name] = attr.value;
+  if (virtualNode.props) {
+    Object.entries(virtualNode.props).forEach(([name, value]) => {
+      if (name === 'key' || name === 'children') {
+        return;
+      }
+      if (realNode[name] !== value) {
+        realNode[name] = value;
       }
     });
   }
-  if (virtualNode.dataset) {
-    Object.keys(virtualNode.dataset).forEach((name) => {
-      realNode.dataset[name] = virtualNode.dataset[name];
-    });
+
+  if (virtualNode.key) {
+    realNode.dataset.key = virtualNode.key;
   }
-  if (virtualNode.nodeValue !== realNode.nodeValue) {
-    realNode.nodeValue = virtualNode.nodeValue;
+  if (typeof virtualNode !== 'object' && virtualNode !== realNode.nodeValue) {
+    realNode.nodeValue = virtualNode;
   }
 
   // Sync child nodes
-  const virtualChildren = virtualNode.childNodes;
+  const virtualChildren = virtualNode.props ? virtualNode.props.children || [] : [];
   const realChildren = realNode.childNodes;
 
   for (let i = 0; i < virtualChildren.length || i < realChildren.length; i += 1) {
@@ -40,12 +60,12 @@ const sync = (virtualNode, realNode) => {
     }
 
     // Update
-    if (virtual !== undefined && real !== undefined && virtual.tagName === real.tagName) {
+    if (virtual !== undefined && real !== undefined && (virtual.type || '') === (real.tagName || '').toLowerCase()) {
       sync(virtual, real);
     }
 
     // Replace
-    if (virtual !== undefined && real !== undefined && virtual.tagName !== real.tagName) {
+    if (virtual !== undefined && real !== undefined && (virtual.type || '') !== (real.tagName || '').toLowerCase()) {
       const newReal = createRealNodeByVirtual(virtual);
       sync(virtual, newReal);
       realNode.replaceChild(newReal, real);
@@ -61,10 +81,17 @@ const sync = (virtualNode, realNode) => {
 };
 
 export default (virtualDom, realDomRoot) => {
-  const virtualDomRoot = document.createElement(realDomRoot.tagName);
+  const evaluatedVirtualDom = evaluate(virtualDom);
 
-  virtualDomRoot.id = realDomRoot.id;
-  virtualDomRoot.appendChild(virtualDom);
+  const virtualDomRoot = {
+    type: realDomRoot.tagName.toLowerCase(),
+    props: {
+      id: realDomRoot.id,
+      children: [
+        evaluatedVirtualDom,
+      ],
+    },
+  };
 
   sync(virtualDomRoot, realDomRoot);
 };

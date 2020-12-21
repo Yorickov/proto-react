@@ -1,4 +1,4 @@
-export const stream = {
+export default {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);
 
@@ -11,18 +11,4 @@ export const stream = {
       }, 500);
     }
   },
-};
-
-export const createNode = (tag, classes = [], textContent = null, attrs = {}) => {
-  const node = document.createElement(tag);
-  node.classList.add(...classes);
-  if (textContent) {
-    node.innerText = textContent;
-  }
-  if (attrs) {
-    Object.keys(attrs).forEach((key) => {
-      node.setAttribute(key, attrs[key]);
-    });
-  }
-  return node;
 };

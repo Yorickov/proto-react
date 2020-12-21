@@ -1,68 +1,152 @@
 import LogoImg from './images/logo.png';
-import { stream, createNode } from './lib/utils';
+import stream from './lib/utils';
 import render from './lib/render';
 import api from './lib/api';
 
 const Logo = () => (
-  createNode('img', ['logo'], null, { src: `${LogoImg}` })
+  {
+    type: 'img',
+    props: {
+      className: 'logo',
+      src: LogoImg,
+    },
+  }
 );
 
-const Header = () => {
-  const node = createNode('header', ['header']);
-  node.append(Logo());
-  return node;
-};
+const Header = () => (
+  {
+    type: 'header',
+    props: {
+      className: 'header',
+      children: [
+        {
+          type: Logo,
+          props: {},
+        },
+      ],
+    },
+  }
+);
 
 export const Loading = () => (
-  createNode('div', ['loading'], 'Loading...')
+  {
+    type: 'div',
+    props: {
+      className: 'loading',
+      children: [
+        'Loading...',
+      ],
+    },
+  }
 );
 
 const Clock = ({ time }) => {
-  const node = createNode('div', ['clock']);
-  const value = createNode('span', ['value'], time.toLocaleTimeString());
+  const isDay = time.getHours() >= 7 && time.getHours() <= 21;
 
-  const iconClasses = (time.getHours() >= 7 && time.getHours() <= 21)
-    ? ['icon', 'day'] : ['icon', 'night'];
-  const icon = createNode('span', iconClasses);
-
-  node.append(value, icon);
-  return node;
+  return {
+    type: 'div',
+    props: {
+      className: 'clock',
+      children: [
+        {
+          type: 'span',
+          props: {
+            className: 'value',
+            children: [
+              time.toLocaleTimeString(),
+            ],
+          },
+        },
+        {
+          type: 'span',
+          props: {
+            className: isDay ? 'icon day' : 'icon night',
+          },
+        },
+      ],
+    },
+  };
 };
 
-const Lot = ({ lot }) => {
-  const node = createNode('article', ['lot']);
-  node.dataset.key = lot.id;
-  const price = createNode('div', ['price'], lot.price);
-  const name = createNode('h1', [], lot.name);
-  const description = createNode('p', [], lot.description);
-
-  node.append(price, name, description);
-  return node;
-};
+const Lot = ({ lot }) => (
+  {
+    type: 'article',
+    key: lot.id,
+    props: {
+      className: 'lot',
+      children: [
+        {
+          type: 'div',
+          props: {
+            className: 'price',
+            children: [
+              lot.price,
+            ],
+          },
+        },
+        {
+          type: 'h1',
+          props: {
+            children: [
+              lot.name,
+            ],
+          },
+        },
+        {
+          type: 'p',
+          props: {
+            children: [
+              lot.description,
+            ],
+          },
+        },
+      ],
+    },
+  }
+);
 
 const Lots = ({ lots }) => {
   if (lots === null) {
-    return Loading();
+    return {
+      type: Loading,
+      props: {},
+    };
   }
 
-  const node = createNode('div', ['lots']);
-  lots.forEach((lot) => {
-    node.append(Lot({ lot }));
-  });
-
-  return node;
+  return {
+    type: 'div',
+    props: {
+      className: 'lots',
+      children: lots.map((lot) => ({
+        type: Lot,
+        props: { lot },
+      })),
+    },
+  };
 };
 
-const App = (state) => {
-  const node = createNode('div', ['app']);
-  node.append(
-    Header(),
-    Clock({ time: state.time }),
-    Lots({ lots: state.lots }),
-  );
-
-  return node;
-};
+const App = (state) => (
+  {
+    type: 'div',
+    props: {
+      className: 'app',
+      children: [
+        {
+          type: Header,
+          props: {},
+        },
+        {
+          type: Clock,
+          props: { time: state.time },
+        },
+        {
+          type: Lots,
+          props: { lots: state.lots },
+        },
+      ],
+    },
+  }
+);
 
 const renderView = (state) => {
   render(
