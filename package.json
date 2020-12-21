@@ -6,6 +6,9 @@
   "dependencies": {
     "@babel/runtime": "^7.12.5",
     "css-loader": "^5.0.1",
+    "node-sass": "^5.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "sass": "^1.30.0",
     "sass-loader": "^10.1.0",
     "style-loader": "^2.0.0"
@@ -14,6 +17,7 @@
     "@babel/core": "*",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "*",
+    "@babel/preset-react": "^7.12.10",
     "babel-eslint": "*",
     "babel-loader": "*",
     "copy-webpack-plugin": "^7.0.0",
@@ -21,6 +25,9 @@
     "eslint-config-airbnb": "*",
     "eslint-plugin-babel": "*",
     "eslint-plugin-import": "*",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "*",
     "webpack": "*",
     "webpack-cli": "*",

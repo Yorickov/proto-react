@@ -1,55 +1,57 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 import LogoImg from './images/logo.png';
-import { stream, VDom } from './lib/utils';
-import render from './lib/render';
+import stream from './lib/utils';
 import api from './lib/api';
 
 const Logo = () => (
-  VDom.createElement('img', { className: 'logo', src: LogoImg })
+  React.createElement('img', { className: 'logo', src: LogoImg })
 );
 
 const Header = () => (
-  VDom.createElement('header', { className: 'header' },
-    VDom.createElement(Logo))
+  React.createElement('header', { className: 'header' },
+    React.createElement(Logo))
 );
 
 const Loading = () => (
-  VDom.createElement('div', { className: 'loading' }, 'Loading...')
+  React.createElement('div', { className: 'loading' }, 'Loading...')
 );
 
 const Clock = ({ time }) => {
   const isDay = time.getHours() >= 7 && time.getHours() <= 21;
 
-  return VDom.createElement('div', { className: 'clock' },
-    VDom.createElement('span', { className: 'value' }, time.toLocaleTimeString()),
-    VDom.createElement('span', { className: isDay ? 'icon day' : 'icon night' }));
+  return React.createElement('div', { className: 'clock' },
+    React.createElement('span', { className: 'value' }, time.toLocaleTimeString()),
+    React.createElement('span', { className: isDay ? 'icon day' : 'icon night' }));
 };
 
 const Lot = ({ lot, key }) => (
-  VDom.createElement('article', { className: 'lot', key },
-    VDom.createElement('div', { className: 'price' }, lot.price),
-    VDom.createElement('h1', {}, lot.name),
-    VDom.createElement('p', {}, lot.description))
+  React.createElement('article', { className: 'lot', key },
+    React.createElement('div', { className: 'price' }, lot.price),
+    React.createElement('h1', {}, lot.name),
+    React.createElement('p', {}, lot.description))
 );
 
 const Lots = ({ lots }) => {
   if (lots === null) {
-    return VDom.createElement(Loading);
+    return React.createElement(Loading);
   }
 
-  return VDom.createElement('div', { className: 'lots' },
-    lots.map((lot) => VDom.createElement(Lot, { lot, key: lot.id })));
+  return React.createElement('div', { className: 'lots' },
+    lots.map((lot) => React.createElement(Lot, { lot, key: lot.id })));
 };
 
 const App = (state) => (
-  VDom.createElement('div', { className: 'app' },
-    VDom.createElement(Header),
-    VDom.createElement(Clock, { time: state.time }),
-    VDom.createElement(Lots, { lots: state.lots }))
+  React.createElement('div', { className: 'app' },
+    React.createElement(Header),
+    React.createElement(Clock, { time: state.time }),
+    React.createElement(Lots, { lots: state.lots }))
 );
 
 const renderView = (state) => {
-  render(
-    VDom.createElement(App, state),
+  ReactDOM.render(
+    React.createElement(App, state),
     document.getElementById('root'),
   );
 };

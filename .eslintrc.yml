@@ -1,19 +1,23 @@
 ---
 
 plugins:
-  # https://github.com/jest-community/eslint-plugin-jest
-  # - jest
   - babel
+  - react
+  - react-hooks
 
-# https://eslint.org/docs/user-guide/configuring#specifying-environments
 env:
   node: true
   es2020: true
-  jest: true
+
+parser: babel-eslint
 
 extends:
   - 'airbnb-base'
-  # - 'plugin:jest/recommended'
+  - 'plugin:jest/recommended'
+
+settings:
+  react:
+    version: detect
 
 parserOptions:
   ecmaVersion: 11
