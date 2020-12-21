@@ -1,4 +1,4 @@
-export default {
+export const stream = {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);
 
@@ -10,5 +10,24 @@ export default {
         });
       }, 500);
     }
+  },
+};
+
+export const VDom = {
+  createElement: (type, config, ...children) => {
+    const key = config ? (config.key || null) : null;
+    const props = config || {};
+
+    if (children.length === 1) {
+      [props.children] = children;
+    } else {
+      props.children = children;
+    }
+
+    return {
+      type,
+      key,
+      props,
+    };
   },
 };
