@@ -1,4 +1,4 @@
 import './common.scss';
-import app from './app';
+import application from './application';
 
-app();
+application();
