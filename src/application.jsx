@@ -12,27 +12,24 @@ const renderView = (state) => {
   );
 };
 
-const initialState = {
-  time: new Date(),
-  lots: null,
-};
-const store = new Store(initialState);
-
 export default async () => {
-  let state = {
+  const initialState = {
     time: new Date(),
     lots: null,
   };
+  const store = new Store(initialState);
+
+  store.subscribe(() => {
+    renderView(store.getState())
+  });
   renderView(store.getState());
 
   setInterval(() => {
     store.changeState({ time: new Date() });
-    renderView(store.getState());
   }, 1000);
 
   const lots = await api.get('/lots');
   store.changeState({ lots });
-  renderView(store.getState());
 
   const onPrice = (data) => {
     store.changeState((state) => ({
@@ -40,7 +37,6 @@ export default async () => {
         lot.id === data.id ? ({ ...lot, price: data.price }) : lot
       )),
     }));
-    renderView(store.getState());
   };
 
   lots.forEach((lot) => {
