@@ -25,14 +25,21 @@ export default async () => {
   renderView(store.getState());
 
   setInterval(() => {
-    store.changeState({ time: new Date() });
+    store.setState((state) => ({
+      ...state,
+      time: new Date(),
+    }));
   }, 1000);
 
   const lots = await api.get('/lots');
-  store.changeState({ lots });
+  store.setState((state) => ({
+    ...state,
+    lots,
+  }));
 
   const onPrice = (data) => {
-    store.changeState((state) => ({
+    store.setState((state) => ({
+      ...state,
       lots: state.lots.map((lot) => (
         lot.id === data.id ? ({ ...lot, price: data.price }) : lot
       )),

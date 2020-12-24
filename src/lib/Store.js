@@ -17,12 +17,8 @@ export default class Store {
     }
   }
 
-  changeState(diff) {
-    this.state = {
-      ...this.state,
-      ...(typeof diff === 'function' ? diff(this.state) : diff),
-    };
-
+  setState(state) {
+    this.state = (typeof state === 'function' ? state(this.state) : state);
     this.listeners.forEach((listener) => listener());
   }
 }
