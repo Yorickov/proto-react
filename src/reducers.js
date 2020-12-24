@@ -1,22 +1,26 @@
-export default (state, action, params) => {
-  switch(action) {
-    case 'setTime':
+export const SET_TIME = 'SET_TIME';
+export const SET_LOTS = 'SET_LOTS';
+export const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
+
+export default (state, action) => {
+  switch(action.type) {
+    case SET_TIME:
       return {
         ...state,
-        time: params.time,
+        time: action.time,
       }
 
-    case 'setLots':
+    case SET_LOTS:
       return {
         ...state,
-        lots: params.lots,
+        lots: action.lots,
       };
 
-    case 'changeLotPrice':
+    case CHANGE_LOT_PRICE:
       return {
         ...state,
         lots: state.lots.map((lot) => (
-          lot.id === params.id ? ({ ...lot, price: params.price }) : lot
+          lot.id === action.id ? ({ ...lot, price: action.price }) : lot
         )),
       };
 
