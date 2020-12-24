@@ -5,7 +5,7 @@ import api from './lib/api';
 import Store from './Store';
 import App from './components/App';
 import appReducer from './reducers';
-import { SET_TIME, SET_LOTS, CHANGE_LOT_PRICE } from './reducers';
+import { setTime, setLots, changeLotPrice } from './actions';
 
 const renderView = (state) => {
   ReactDOM.render(
@@ -23,25 +23,15 @@ export default async () => {
   renderView(store.getState());
 
   setInterval(() => {
-    store.dispatch({
-      type: SET_TIME,
-      time: new Date(),
-    });
+    store.dispatch(setTime(new Date()));
   }, 1000);
 
   const lots = await api.get('/lots');
-  store.dispatch({
-    type: SET_LOTS,
-    lots,
-  });
+  store.dispatch(setLots(lots));
 
   lots.forEach((lot) => {
     stream.subscribe(`price-${lot.id}`, ({ id, price }) => {
-      store.dispatch({
-        type: CHANGE_LOT_PRICE,
-        id,
-        price,
-      });
+      store.dispatch(changeLotPrice(id, price));
     });
   });
 };

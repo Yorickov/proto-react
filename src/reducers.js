@@ -1,6 +1,6 @@
-export const SET_TIME = 'SET_TIME';
-export const SET_LOTS = 'SET_LOTS';
-export const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
+const SET_TIME = 'SET_TIME';
+const SET_LOTS = 'SET_LOTS';
+const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
 
 const initialState = {
   time: new Date(),
