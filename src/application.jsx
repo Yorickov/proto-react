@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import stream from './lib/utils';
+
+import { stream } from './lib/utils';
 import api from './lib/api';
 import Store from './Store';
 import App from './components/App';

@@ -1,20 +1,32 @@
+import { combineReducers } from './lib/utils';
+
 const SET_TIME = 'SET_TIME';
 const SET_LOTS = 'SET_LOTS';
 const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
 
-const initialState = {
+const clockInitialState = {
   time: new Date(),
-  lots: null,
 };
 
-export default (state = initialState, action) => {
+const clockReducer = (state = clockInitialState, action) => {
   switch(action.type) {
     case SET_TIME:
       return {
         ...state,
         time: action.time,
-      }
+      };
 
+    default:
+      return state;
+  }
+};
+
+const auctionInitialState = {
+  lots: null,
+};
+
+const auctionReducer = (state = auctionInitialState, action) => {
+  switch(action.type) {
     case SET_LOTS:
       return {
         ...state,
@@ -33,3 +45,8 @@ export default (state = initialState, action) => {
       return state;
   }
 };
+
+export default combineReducers({
+  clock: clockReducer,
+  auction: auctionReducer,
+});

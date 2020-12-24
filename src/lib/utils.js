@@ -1,4 +1,4 @@
-export default {
+export const stream = {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);
 
@@ -12,3 +12,12 @@ export default {
     }
   },
 };
+
+export const combineReducers = (reducers) => (
+  (state = {}, action) => {
+    const result = {};
+    Object.entries(reducers).forEach(([key, reducer]) => {
+      result[key] = reducer(state[key], action)
+    });
+    return result;
+  });
