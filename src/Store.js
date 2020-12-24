@@ -1,6 +1,8 @@
 export default class Store {
-  constructor (initialState) {
-    this.state = initialState;
+  constructor (reducer, initialState) {
+    this.reducer = reducer;
+    // this.state = initialState;
+    this.state = reducer(initialState, { type: null });
     this.listeners = [];
   }
 
@@ -10,6 +12,7 @@ export default class Store {
 
   subscribe(listener) {
     this.listeners.push(listener);
+
     // unsubscribe
     return () => {
       const index = this.listeners.indexOf(listener);
@@ -17,8 +20,12 @@ export default class Store {
     }
   }
 
-  setState(state) {
-    this.state = (typeof state === 'function' ? state(this.state) : state);
+  publish() {
     this.listeners.forEach((listener) => listener());
+  }
+
+  dispatch (action) {
+    this.state = this.reducer(this.state, action)
+    this.publish();
   }
 }

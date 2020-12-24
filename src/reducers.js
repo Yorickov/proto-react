@@ -2,7 +2,12 @@ export const SET_TIME = 'SET_TIME';
 export const SET_LOTS = 'SET_LOTS';
 export const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
 
-export default (state, action) => {
+const initialState = {
+  time: new Date(),
+  lots: null,
+};
+
+export default (state = initialState, action) => {
   switch(action.type) {
     case SET_TIME:
       return {

@@ -15,11 +15,7 @@ const renderView = (state) => {
 };
 
 export default async () => {
-  const initialState = {
-    time: new Date(),
-    lots: null,
-  };
-  const store = new Store(initialState);
+  const store = new Store(appReducer);
 
   store.subscribe(() => {
     renderView(store.getState())
@@ -27,23 +23,25 @@ export default async () => {
   renderView(store.getState());
 
   setInterval(() => {
-    store.setState((state) => appReducer(state, {
+    store.dispatch({
       type: SET_TIME,
       time: new Date(),
-    }));
+    });
   }, 1000);
 
   const lots = await api.get('/lots');
-  store.setState((state) => appReducer(state, {
+  store.dispatch({
     type: SET_LOTS,
     lots,
-  }));
+  });
 
   lots.forEach((lot) => {
     stream.subscribe(`price-${lot.id}`, ({ id, price }) => {
-      store.setState((state) => appReducer(state, {
-        type: CHANGE_LOT_PRICE, id, price
-      }));
+      store.dispatch({
+        type: CHANGE_LOT_PRICE,
+        id,
+        price,
+      });
     });
   });
 };
