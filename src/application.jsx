@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
 import stream from './lib/utils';
 import api from './lib/api';
-import Store from './lib/Store';
+import Store from './Store';
+import App from './components/App';
+import { setTime, setLots, changeLotPrice } from './reducers';
 
 const renderView = (state) => {
   ReactDOM.render(
@@ -25,28 +26,15 @@ export default async () => {
   renderView(store.getState());
 
   setInterval(() => {
-    store.setState((state) => ({
-      ...state,
-      time: new Date(),
-    }));
+    store.setState((state) => setTime(state, { time: new Date() }));
   }, 1000);
 
   const lots = await api.get('/lots');
-  store.setState((state) => ({
-    ...state,
-    lots,
-  }));
-
-  const onPrice = (data) => {
-    store.setState((state) => ({
-      ...state,
-      lots: state.lots.map((lot) => (
-        lot.id === data.id ? ({ ...lot, price: data.price }) : lot
-      )),
-    }));
-  };
+  store.setState((state) => setLots(state, { lots }));
 
   lots.forEach((lot) => {
-    stream.subscribe(`price-${lot.id}`, onPrice);
+    stream.subscribe(`price-${lot.id}`, ({ id, price }) => {
+      store.setState((state) => changeLotPrice(state, { id, price }));
+    });
   });
 };
