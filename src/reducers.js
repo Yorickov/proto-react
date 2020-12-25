@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { SET_TIME, SET_LOTS, CHANGE_LOT_PRICE } from './actions';
+import { SET_TIME, SET_LOTS, CHANGE_LOT_PRICE, FAVORITE_LOT, UNFAVORITE_LOT } from './actions';
 
 const clockInitialState = {
   time: new Date(),
@@ -35,6 +35,22 @@ const auctionReducer = (state = auctionInitialState, action) => {
         ...state,
         lots: state.lots.map((lot) => (
           lot.id === action.id ? ({ ...lot, price: action.price }) : lot
+        )),
+      };
+
+    case FAVORITE_LOT:
+      return {
+        ...state,
+        lots: state.lots.map((lot) => (
+          lot.id === action.id ? ({ ...lot, favorite: true }) : lot
+        )),
+      };
+
+    case UNFAVORITE_LOT:
+      return {
+        ...state,
+        lots: state.lots.map((lot) => (
+          lot.id === action.id ? ({ ...lot, favorite: false }) : lot
         )),
       };
 

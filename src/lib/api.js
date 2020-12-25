@@ -26,4 +26,21 @@ export default {
         return Promise.reject(new Error('Unknown address'));
     }
   },
+  post(url) {
+    if (/^\/lots\/(\d+)\/favorite$/.exec(url)) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({});
+        }, 500);
+      });
+    }
+    if (/^\/lots\/(\d+)\/unfavorite$/.exec(url)) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({});
+        }, 500);
+      });
+    }
+    return Promise.reject(new Error('Unknown address'));
+  },
 };

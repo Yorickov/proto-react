@@ -2,38 +2,56 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 
-import { stream } from './lib/utils';
+import stream from './lib/utils';
 import api from './lib/api';
 import App from './components/App';
 import appReducer from './reducers';
-import { setTime, setLots, changeLotPrice } from './actions';
+import * as actions from './actions';
 
-const renderView = (state) => {
+const renderView = (store) => {
+  const state = store.getState();
+  const dispatch = store.dispatch;
+
+  const favorite = (id) => {
+    api.post(`/lots/${id}/favorite`).then(() => {
+      dispatch(actions.favoriteLot(id));
+    });
+  };
+
+  const unfavorite = (id) => {
+    api.post(`/lots/${id}/unfavorite`).then(() => {
+      dispatch(actions.unfavoriteLot(id));
+    });
+  };
+
   ReactDOM.render(
-    <App state={state} />,
+    <App
+      state={state}
+      favorite={favorite}
+      unfavorite={unfavorite}
+    />,
     document.getElementById('root'),
   );
 };
 
 export default async () => {
-  const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__;
-  const store = createStore(appReducer, reduxDevtools && reduxDevtools());
+  const store = createStore(appReducer);
 
   store.subscribe(() => {
-    renderView(store.getState())
+    renderView(store)
   });
-  renderView(store.getState());
+  renderView(store);
 
   setInterval(() => {
-    store.dispatch(setTime(new Date()));
+    store.dispatch(actions.setTime(new Date()));
   }, 1000);
 
   const lots = await api.get('/lots');
-  store.dispatch(setLots(lots));
+  store.dispatch(actions.setLots(lots));
 
   lots.forEach((lot) => {
     stream.subscribe(`price-${lot.id}`, ({ id, price }) => {
-      store.dispatch(changeLotPrice(id, price));
+      store.dispatch(actions.changeLotPrice(id, price));
     });
   });
 };
