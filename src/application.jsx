@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
 
 import { stream } from './lib/utils';
 import api from './lib/api';
-import Store from './Store';
 import App from './components/App';
 import appReducer from './reducers';
 import { setTime, setLots, changeLotPrice } from './actions';
@@ -16,7 +16,7 @@ const renderView = (state) => {
 };
 
 export default async () => {
-  const store = new Store(appReducer);
+  const store = createStore(appReducer);
 
   store.subscribe(() => {
     renderView(store.getState())

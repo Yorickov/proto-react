@@ -1,8 +1,5 @@
-import { combineReducers } from './lib/utils';
-
-const SET_TIME = 'SET_TIME';
-const SET_LOTS = 'SET_LOTS';
-const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
+import { combineReducers } from 'redux';
+import { SET_TIME, SET_LOTS, CHANGE_LOT_PRICE } from './actions';
 
 const clockInitialState = {
   time: new Date(),
