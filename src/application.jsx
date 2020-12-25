@@ -16,7 +16,8 @@ const renderView = (state) => {
 };
 
 export default async () => {
-  const store = createStore(appReducer);
+  const reduxDevtools = window.__REDUX_DEVTOOLS_EXTENSION__;
+  const store = createStore(appReducer, reduxDevtools && reduxDevtools());
 
   store.subscribe(() => {
     renderView(store.getState())

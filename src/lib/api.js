@@ -10,12 +10,14 @@ export default {
                 name: 'Apple',
                 description: 'Apple description',
                 price: 16,
+                favorite: true,
               },
               {
                 id: 2,
                 name: 'Orange',
                 description: 'Orange description',
                 price: 41,
+                favorite: false,
               },
             ]);
           }, 1000);

@@ -53,6 +53,11 @@ body {
   border-radius: 6px;
   margin-bottom: 10px;
 
+  &.favorite {
+    border-color: #ffd7cb;
+    background: #ffd7cb;
+  }
+
   .price {
     float: right;
     text-align: right;
@@ -65,7 +70,31 @@ body {
   }
 
   p {
-    margin: 0;
+    margin: 0 0 15px 0;
+  }
+
+  button {
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 4px 6px;
+    font-size: 0.8rem;
+    outline: none;
+
+    * {
+      vertical-align: middle;
+    }
+
+    &.favorite {
+      background: #fff;
+      border: 1px solid #999;
+      color: #000;
+    }
+
+    &.unfavorite {
+      background: #fff;
+      border: 1px solid #ff8c68;
+      color: #dc0000;
+    }
   }
 }
 
