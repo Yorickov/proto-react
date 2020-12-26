@@ -1,8 +1,8 @@
 import React from 'react';
 import Loading from './Loading';
-import Lot from './Lot';
+import LotConnected from './LotConnected';
 
-const Lots = ({ lots, favorite, unfavorite }) => {
+const Lots = ({ lots, store }) => {
   if (lots === null) {
     return <Loading />;
   }
@@ -10,10 +10,9 @@ const Lots = ({ lots, favorite, unfavorite }) => {
   return (
     <div className="lots">
       {lots.map((lot) =>
-        <Lot
+        <LotConnected
           lot={lot}
-          favorite={favorite}
-          unfavorite={unfavorite}
+          store={store}
           key={lot.id}
         />)}
     </div>
