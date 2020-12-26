@@ -15,8 +15,8 @@ const Lot = ({ lot, favorite, unfavorite }) => {
       <p>{lot.description}</p>
       <Favorite
         active={lot.favorite}
-        favorite={() => favorite(lot.id)}
-        unfavorite={() => unfavorite(lot.id)}
+        favorite={favorite(lot.id)}
+        unfavorite={unfavorite(lot.id)}
       />
     </article>
   );

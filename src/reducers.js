@@ -5,12 +5,12 @@ const clockInitialState = {
   time: new Date(),
 };
 
-const clockReducer = (state = clockInitialState, action) => {
-  switch(action.type) {
+const clockReducer = (state = clockInitialState, { type, payload }) => {
+  switch(type) {
     case SET_TIME:
       return {
         ...state,
-        time: action.time,
+        payload: { time: payload.time },
       };
 
     default:
@@ -22,36 +22,39 @@ const auctionInitialState = {
   lots: null,
 };
 
-const auctionReducer = (state = auctionInitialState, action) => {
-  switch(action.type) {
+const auctionReducer = (state = auctionInitialState, { type, payload }) => {
+  switch(type) {
     case SET_LOTS:
       return {
         ...state,
-        lots: action.lots,
+        lots: payload.lots,
       };
 
     case CHANGE_LOT_PRICE:
+      const newLots = state.lots.map((lot) => (
+        lot.id === payload.id ? ({ ...lot, price: payload.price }) : lot
+      ));
       return {
         ...state,
-        lots: state.lots.map((lot) => (
-          lot.id === action.id ? ({ ...lot, price: action.price }) : lot
-        )),
+        lots: newLots,
       };
 
     case FAVORITE_LOT:
+      const newFavLots = state.lots.map((lot) => (
+        lot.id === payload.id ? ({ ...lot, favorite: true }) : lot
+      ));
       return {
         ...state,
-        lots: state.lots.map((lot) => (
-          lot.id === action.id ? ({ ...lot, favorite: true }) : lot
-        )),
+        lots: newFavLots,
       };
 
     case UNFAVORITE_LOT:
+      const newUnfavLots = state.lots.map((lot) => (
+        lot.id === payload.id ? ({ ...lot, favorite: false }) : lot
+      ));
       return {
         ...state,
-        lots: state.lots.map((lot) => (
-          lot.id === action.id ? ({ ...lot, favorite: false }) : lot
-        )),
+        lots: newUnfavLots,
       };
 
     default:

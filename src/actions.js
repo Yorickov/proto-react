@@ -5,27 +5,26 @@ export const FAVORITE_LOT = 'FAVORITE_LOT'
 export const UNFAVORITE_LOT = 'UNFAVORITE_LOT'
 
 export const setTime = (time) => ({
-    type: SET_TIME,
-    time,
-  });
+  type: SET_TIME,
+  payload: { time },
+});
 
 export const setLots = (lots) => ({
   type: SET_LOTS,
-  lots,
+  payload: { lots },
 });
 
 export const changeLotPrice = (id, price) => ({
   type: CHANGE_LOT_PRICE,
-  id,
-  price,
+  payload: { id, price },
 });
 
 export const favoriteLot = (id) => ({
   type: FAVORITE_LOT,
-  id,
+  payload: { id },
 });
 
 export const unfavoriteLot = (id) => ({
   type: UNFAVORITE_LOT,
-  id,
+  payload: { id },
 });

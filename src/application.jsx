@@ -9,27 +9,8 @@ import appReducer from './reducers';
 import * as actions from './actions';
 
 const renderView = (store) => {
-  const state = store.getState();
-  const dispatch = store.dispatch;
-
-  const favorite = (id) => {
-    api.post(`/lots/${id}/favorite`).then(() => {
-      dispatch(actions.favoriteLot(id));
-    });
-  };
-
-  const unfavorite = (id) => {
-    api.post(`/lots/${id}/unfavorite`).then(() => {
-      dispatch(actions.unfavoriteLot(id));
-    });
-  };
-
   ReactDOM.render(
-    <App
-      state={state}
-      favorite={favorite}
-      unfavorite={unfavorite}
-    />,
+    <App store={store} />,
     document.getElementById('root'),
   );
 };
