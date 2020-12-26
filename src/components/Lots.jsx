@@ -2,7 +2,7 @@ import React from 'react';
 import Loading from './Loading';
 import LotConnected from './LotConnected';
 
-const Lots = ({ lots, store }) => {
+const Lots = ({ lots }) => {
   if (lots === null) {
     return <Loading />;
   }
@@ -10,11 +10,7 @@ const Lots = ({ lots, store }) => {
   return (
     <div className="lots">
       {lots.map((lot) =>
-        <LotConnected
-          lot={lot}
-          store={store}
-          key={lot.id}
-        />)}
+        <LotConnected lot={lot} key={lot.id} />)}
     </div>
   )
 };

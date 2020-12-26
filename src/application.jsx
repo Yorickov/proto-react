@@ -8,9 +8,13 @@ import App from './components/App';
 import appReducer from './reducers';
 import * as actions from './actions';
 
+export const StoreContext = React.createContext();
+
 const renderView = (store) => {
   ReactDOM.render(
-    <App store={store} />,
+    <StoreContext.Provider value={store}>
+      <App />
+    </StoreContext.Provider>,
     document.getElementById('root'),
   );
 };

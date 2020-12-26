@@ -3,11 +3,11 @@ import Header from './Header';
 import ClockConnected from './ClockConnected';
 import LotsConnected from './LotsConnected';
 
-const App = ({ store }) => (
+const App = () => (
   <div className="app">
     <Header />
-    <ClockConnected store={store} />
-    <LotsConnected store={store} />
+    <ClockConnected />
+    <LotsConnected />
   </div>
 );
 
