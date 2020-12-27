@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import Favorite from './Favorite';
+import Favorite from './Favorite.jsx';
 
 const Lot = ({ lot, favorite, unfavorite }) => {
   const articleClasses = cn({

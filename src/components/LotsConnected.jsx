@@ -1,10 +1,8 @@
-import Lots from './Lots';
+import Lots from './Lots.jsx';
 import { connect } from '../lib/utils';
 
 const mapStateToProps = (state) => ({
   lots: state.auction.lots,
 });
 
-const LotsConnected = connect(mapStateToProps, null, Lots);
-
-export default LotsConnected;
+export default connect(mapStateToProps)(Lots);

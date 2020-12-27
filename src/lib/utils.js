@@ -17,19 +17,20 @@ export const stream = {
 
 export const StoreContext = React.createContext();
 
-export const connect = (mapStateToProps, mapDispatchToProps, WrappedComponent) => (
-  (props) => (
-    <StoreContext.Consumer>
-      {(store) => {
-        const stateToProps = mapStateToProps ? mapStateToProps(store.getState()) : {};
-        const dispatchToProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : {};
-        return (
-          <WrappedComponent
-            {...props}
-            {...stateToProps}
-            {...dispatchToProps}
-          />
-        );
-      }}
-    </StoreContext.Consumer>
-  ));
+export const connect = (mapStateToProps, mapDispatchToProps) => (
+  (WrappedComponent) => (
+    (props) => (
+      <StoreContext.Consumer>
+        {(store) => {
+          const stateToProps = mapStateToProps ? mapStateToProps(store.getState()) : {};
+          const dispatchToProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : {};
+          return (
+            <WrappedComponent
+              {...props}
+              {...stateToProps}
+              {...dispatchToProps}
+            />
+          );
+        }}
+      </StoreContext.Consumer>
+    )));

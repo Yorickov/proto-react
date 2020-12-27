@@ -1,10 +1,8 @@
-import Clock from './Clock';
+import Clock from './Clock.jsx';
 import { connect } from '../lib/utils';
 
 const mapStateToProps = (state) => ({
   time: state.clock.time,
 });
 
-const ClockConnected = connect(mapStateToProps, null, Clock);
-
-export default ClockConnected;
+export default connect(mapStateToProps)(Clock);

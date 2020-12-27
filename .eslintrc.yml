@@ -13,7 +13,6 @@ parser: babel-eslint
 
 extends:
   - 'airbnb-base'
-  - 'plugin:jest/recommended'
   - 'plugin:react/recommended'
 
 settings:
@@ -31,3 +30,4 @@ rules:
   import/no-unresolved: 0
   no-undef: 0
   no-param-reassign: 0
+  react/prop-types: 0

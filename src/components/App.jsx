@@ -1,7 +1,7 @@
 import React from 'react';
-import Header from './Header';
-import ClockConnected from './ClockConnected';
-import LotsConnected from './LotsConnected';
+import Header from './Header.jsx';
+import ClockConnected from './ClockConnected.jsx';
+import LotsConnected from './LotsConnected.jsx';
 
 const App = () => (
   <div className="app">

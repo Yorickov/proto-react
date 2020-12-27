@@ -1,6 +1,6 @@
 import api from '../lib/api';
 import * as actions from '../actions';
-import Lot from './Lot';
+import Lot from './Lot.jsx';
 import { connect } from '../lib/utils';
 
 const mapStateToProps = (dispatch) => ({
@@ -14,6 +14,4 @@ const mapStateToProps = (dispatch) => ({
   },
 });
 
-const LotConnected = connect(null, mapStateToProps, Lot);
-
-export default LotConnected;
+export default connect(null, mapStateToProps)(Lot);
