@@ -1,6 +1,4 @@
-import React from 'react';
-
-export const stream = {
+export default {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);
 
@@ -14,41 +12,3 @@ export const stream = {
     }
   },
 };
-
-export const StoreContext = React.createContext();
-
-export const connect = (mapStateToProps, mapDispatchToProps) => (
-  (WrappedComponent) => (
-    (props) => (
-      <StoreContext.Consumer>
-        {(store) => (
-          React.createElement(
-            class extends React.Component {
-              render() {
-                const stateToProps = mapStateToProps ? mapStateToProps(store.getState()) : {};
-                const dispatchToProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : {};
-                return (
-                  <WrappedComponent
-                    {...this.props}
-                    {...stateToProps}
-                    {...dispatchToProps}
-                  />
-                );
-              }
-
-              componentDidMount() {
-                this.unsubscribe = store.subscribe(this.handleChange.bind(this));
-              }
-
-              componentWillUnmount() {
-                this.unsubscribe();
-              }
-
-              handleChange() {
-                this.forceUpdate();
-              }
-            },
-            props,
-          ))}
-      </StoreContext.Consumer>
-    )));

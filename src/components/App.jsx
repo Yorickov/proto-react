@@ -1,13 +1,13 @@
 import React from 'react';
 import Header from './Header.jsx';
-import ClockConnected from './ClockConnected.jsx';
-import LotsConnected from './LotsConnected.jsx';
+import Clock from './Clock.jsx';
+import Lots from './Lots.jsx';
 
 const App = () => (
   <div className="app">
     <Header />
-    <ClockConnected />
-    <LotsConnected />
+    <Clock />
+    <Lots />
   </div>
 );
 

@@ -1,6 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Loading from './Loading.jsx';
-import LotConnected from './LotConnected.jsx';
+import Lot from './Lot.jsx';
+
+const mapStateToProps = (state) => ({
+  lots: state.auction.lots,
+});
 
 const Lots = ({ lots }) => {
   if (lots === null) {
@@ -9,9 +14,9 @@ const Lots = ({ lots }) => {
 
   return (
     <div className="lots">
-      {lots.map((lot) => <LotConnected lot={lot} key={lot.id} />)}
+      {lots.map((lot) => <Lot lot={lot} key={lot.id} />)}
     </div>
   );
 };
 
-export default Lots;
+export default connect(mapStateToProps)(Lots);
