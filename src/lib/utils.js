@@ -21,16 +21,34 @@ export const connect = (mapStateToProps, mapDispatchToProps) => (
   (WrappedComponent) => (
     (props) => (
       <StoreContext.Consumer>
-        {(store) => {
-          const stateToProps = mapStateToProps ? mapStateToProps(store.getState()) : {};
-          const dispatchToProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : {};
-          return (
-            <WrappedComponent
-              {...props}
-              {...stateToProps}
-              {...dispatchToProps}
-            />
-          );
-        }}
+        {(store) => (
+          React.createElement(
+            class extends React.Component {
+              render() {
+                const stateToProps = mapStateToProps ? mapStateToProps(store.getState()) : {};
+                const dispatchToProps = mapDispatchToProps ? mapDispatchToProps(store.dispatch) : {};
+                return (
+                  <WrappedComponent
+                    {...this.props}
+                    {...stateToProps}
+                    {...dispatchToProps}
+                  />
+                );
+              }
+
+              componentDidMount() {
+                this.unsubscribe = store.subscribe(this.handleChange.bind(this));
+              }
+
+              componentWillUnmount() {
+                this.unsubscribe();
+              }
+
+              handleChange() {
+                this.forceUpdate();
+              }
+            },
+            props,
+          ))}
       </StoreContext.Consumer>
     )));

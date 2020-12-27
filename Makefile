@@ -6,7 +6,7 @@ dev:
 
 build:
 	rm -rf public
-	npx webpack
+	NODE_ENV=production npx webpack
 
 lint:
 	npx eslint .
