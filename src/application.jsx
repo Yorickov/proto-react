@@ -2,13 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 
-import stream from './lib/utils';
+import { stream, StoreContext } from './lib/utils';
 import api from './lib/api';
 import App from './components/App';
 import appReducer from './reducers';
 import * as actions from './actions';
-
-export const StoreContext = React.createContext();
 
 const renderView = (store) => {
   ReactDOM.render(

@@ -1,18 +1,10 @@
-import React from 'react';
 import Lots from './Lots';
-import { StoreContext } from '../application';
+import { connect } from '../lib/utils';
 
-const LotsConnected = () => (
-  <StoreContext.Consumer>
-    {(store) => {
-      const state = store.getState();
-      const stateToProps = {
-        lots: state.auction.lots,
-      };
+const mapStateToProps = (state) => ({
+  lots: state.auction.lots,
+});
 
-      return <Lots {...stateToProps} />;
-    }}
-  </StoreContext.Consumer>
-);
+const LotsConnected = connect(mapStateToProps, null, Lots);
 
 export default LotsConnected;

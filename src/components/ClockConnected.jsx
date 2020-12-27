@@ -1,18 +1,10 @@
-import React from 'react';
 import Clock from './Clock';
-import { StoreContext } from '../application';
+import { connect } from '../lib/utils';
 
-const ClockConnected = () => (
-  <StoreContext.Consumer>
-    {(store) => {
-      const state = store.getState();
-      const stateToProps = {
-        time: state.clock.time,
-      };
+const mapStateToProps = (state) => ({
+  time: state.clock.time,
+});
 
-      return <Clock {...stateToProps} />;
-    }}
-  </StoreContext.Consumer>
-);
+const ClockConnected = connect(mapStateToProps, null, Clock);
 
 export default ClockConnected;
