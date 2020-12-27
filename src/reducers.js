@@ -1,66 +1,52 @@
-import { combineReducers } from 'redux';
-import { SET_TIME, SET_LOTS, CHANGE_LOT_PRICE, FAVORITE_LOT, UNFAVORITE_LOT } from './actions';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import * as actions from './actions';
 
-const clockInitialState = {
-  time: new Date(),
-};
+const clockReducer = createReducer({ time: new Date() }, {
+  [actions.setTime]: (state, { payload }) => ({
+    ...state,
+    time: payload.time,
+  }),
+});
 
-const clockReducer = (state = clockInitialState, { type, payload }) => {
-  switch(type) {
-    case SET_TIME:
-      return {
-        ...state,
-        payload: { time: payload.time },
-      };
-
-    default:
-      return state;
-  }
-};
-
-const auctionInitialState = {
-  lots: null,
-};
-
-const auctionReducer = (state = auctionInitialState, { type, payload }) => {
-  switch(type) {
-    case SET_LOTS:
-      return {
-        ...state,
-        lots: payload.lots,
-      };
-
-    case CHANGE_LOT_PRICE:
-      const newLots = state.lots.map((lot) => (
-        lot.id === payload.id ? ({ ...lot, price: payload.price }) : lot
-      ));
-      return {
-        ...state,
-        lots: newLots,
-      };
-
-    case FAVORITE_LOT:
-      const newFavLots = state.lots.map((lot) => (
-        lot.id === payload.id ? ({ ...lot, favorite: true }) : lot
-      ));
-      return {
-        ...state,
-        lots: newFavLots,
-      };
-
-    case UNFAVORITE_LOT:
-      const newUnfavLots = state.lots.map((lot) => (
-        lot.id === payload.id ? ({ ...lot, favorite: false }) : lot
-      ));
-      return {
-        ...state,
-        lots: newUnfavLots,
-      };
-
-    default:
-      return state;
-  }
-};
+const auctionReducer = createReducer({ lots: null }, {
+  [actions.setLots]: (state, { payload }) => ({
+    ...state,
+    lots: payload.lots,
+  }),
+  [actions.changeLotPrice]: (state, { payload }) => {
+    // const newLots = state.lots.map((lot) => (
+    //   lot.id === payload.id ? ({ ...lot, price: payload.price }) : lot
+    // ));
+    // return {
+    //   ...state,
+    //   lots: newLots,
+    // };
+    const lot = state.lots.find((l) => l.id === payload.id);
+    lot.price = payload.price;
+  },
+  [actions.favoriteLot]: (state, { payload }) => {
+    // const newLots = state.lots.map((lot) => (
+    //   lot.id === payload.id ? ({ ...lot, favorite: true }) : lot
+    // ));
+    // return {
+    //   ...state,
+    //   lots: newLots,
+    // };
+    const lot = state.lots.find((l) => l.id === payload.id);
+    lot.favorite = true;
+  },
+  [actions.unfavoriteLot]: (state, { payload }) => {
+    // const newLots = state.lots.map((lot) => (
+    //   lot.id === payload.id ? ({ ...lot, favorite: false }) : lot
+    // ));
+    // return {
+    //   ...state,
+    //   lots: newLots,
+    // };
+    const lot = state.lots.find((l) => l.id === payload.id);
+    lot.favorite = false;
+  },
+});
 
 export default combineReducers({
   clock: clockReducer,

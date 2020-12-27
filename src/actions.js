@@ -1,30 +1,16 @@
-export const SET_TIME = 'SET_TIME';
-export const SET_LOTS = 'SET_LOTS';
-export const CHANGE_LOT_PRICE = 'CHANGE_LOT_PRICE';
-export const FAVORITE_LOT = 'FAVORITE_LOT'
-export const UNFAVORITE_LOT = 'UNFAVORITE_LOT'
+import { createAction } from '@reduxjs/toolkit';
 
-export const setTime = (time) => ({
-  type: SET_TIME,
-  payload: { time },
-});
+export const setTime = createAction('SET_TIME',
+  (time) => ({ payload: { time } }));
 
-export const setLots = (lots) => ({
-  type: SET_LOTS,
-  payload: { lots },
-});
+export const setLots = createAction('SET_LOTS',
+  (lots) => ({ payload: { lots } }));
 
-export const changeLotPrice = (id, price) => ({
-  type: CHANGE_LOT_PRICE,
-  payload: { id, price },
-});
+export const changeLotPrice = createAction('CHANGE_LOT_PRICE',
+  (id, price) => ({ payload: { id, price } }));
 
-export const favoriteLot = (id) => ({
-  type: FAVORITE_LOT,
-  payload: { id },
-});
+export const favoriteLot = createAction('FAVORITE_LOT',
+  (id) => ({ payload: { id } }));
 
-export const unfavoriteLot = (id) => ({
-  type: UNFAVORITE_LOT,
-  payload: { id },
-});
+export const unfavoriteLot = createAction('UNFAVORITE_LOT',
+  (id) => ({ payload: { id } }));
