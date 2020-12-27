@@ -6,9 +6,11 @@ const ClockConnected = () => (
   <StoreContext.Consumer>
     {(store) => {
       const state = store.getState();
-      const time = state.clock.time;
+      const stateToProps = {
+        time: state.clock.time,
+      };
 
-      return <Clock time={time} />;
+      return <Clock {...stateToProps} />;
     }}
   </StoreContext.Consumer>
 );

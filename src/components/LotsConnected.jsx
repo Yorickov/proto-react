@@ -6,9 +6,11 @@ const LotsConnected = () => (
   <StoreContext.Consumer>
     {(store) => {
       const state = store.getState();
-      const lots = state.auction.lots;
+      const stateToProps = {
+        lots: state.auction.lots,
+      };
 
-      return <Lots lots={lots} />;
+      return <Lots {...stateToProps} />;
     }}
   </StoreContext.Consumer>
 );
