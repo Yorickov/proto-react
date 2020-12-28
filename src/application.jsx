@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
 import stream from './lib/utils';
 import api from './lib/api';
 import App from './components/App.jsx';
@@ -9,18 +10,9 @@ import appReducer from './reducers';
 import * as actions from './actions';
 
 export default async () => {
-  const functionalActionSupport = ({ dispatch, getState }) => (
-    (next) => (
-      (action) => {
-        if (typeof action === 'function') {
-          return action(dispatch, getState);
-        }
-        return next(action);
-      }));
-
   const store = createStore(
     appReducer,
-    applyMiddleware(functionalActionSupport),
+    applyMiddleware(thunk.withExtraArgument({ api })),
   );
 
   ReactDOM.render(
