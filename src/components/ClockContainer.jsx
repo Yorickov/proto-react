@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Clock from './Clock.jsx';
 
-class ClockContainer extends Component {
-  state = { time: new Date() };
+const ClockContainer = () => {
+  const [time, setTime] = useState(new Date());
 
-  tick = () => {
-    this.setState({ time: new Date() });
-  }
+  const tick = () => {
+    setTime(new Date());
+  };
 
-  componentDidMount() {
-    this.timeInterval = setInterval(this.tick, 1000);
-  }
+  useEffect(() => {
+    const timeInterval = setInterval(tick, 1000);
+    return () => clearInterval(timeInterval);
+  }, [setTime]);
 
-  componentWillUnmount() {
-    clearInterval(this.timeInterval);
-  }
-
-  render() {
-    return <Clock time={this.state.time} />;
-  }
-}
+  return <Clock time={time} />;
+};
 
 export default ClockContainer;
