@@ -4,7 +4,7 @@ import cn from 'classnames';
 import Favorite from './Favorite.jsx';
 import * as actions from '../actions';
 
-const mapDispatchToProps = {
+const actionCreators = {
   favorite: actions.favoriteLotAsync,
   unfavorite: actions.unfavoriteLotAsync,
 };
@@ -29,11 +29,11 @@ const Lot = ({ lot, favorite, unfavorite }) => {
       <p>{lot.description}</p>
       <Favorite
         active={lot.favorite}
-        favorite={() => favorite(lot.id)}
-        unfavorite={() => unfavorite(lot.id)}
+        favorite={favorite.bind(null, lot.id)}
+        unfavorite={unfavorite.bind(null, lot.id)}
       />
     </article>
   );
 };
 
-export default connect(null, mapDispatchToProps)(Lot);
+export default connect(null, actionCreators)(Lot);

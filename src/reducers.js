@@ -1,3 +1,4 @@
+import update from 'immutability-helper';
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
 import * as actions from './actions';
 
@@ -14,37 +15,34 @@ const auctionReducer = createReducer({ lots: null }, {
     lots: payload.lots,
   }),
   [actions.changeLotPrice]: (state, { payload }) => {
-    // const newLots = state.lots.map((lot) => (
-    //   lot.id === payload.id ? ({ ...lot, price: payload.price }) : lot
-    // ));
-    // return {
-    //   ...state,
-    //   lots: newLots,
-    // };
-    const lot = state.lots.find((l) => l.id === payload.id);
-    lot.price = payload.price;
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { price: { $set: payload.price } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.price = payload.price;
   },
   [actions.favoriteLot]: (state, { payload }) => {
-    // const newLots = state.lots.map((lot) => (
-    //   lot.id === payload.id ? ({ ...lot, favorite: true }) : lot
-    // ));
-    // return {
-    //   ...state,
-    //   lots: newLots,
-    // };
-    const lot = state.lots.find((l) => l.id === payload.id);
-    lot.favorite = true;
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { favorite: { $set: true } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.favorite = true;
   },
   [actions.unfavoriteLot]: (state, { payload }) => {
-    // const newLots = state.lots.map((lot) => (
-    //   lot.id === payload.id ? ({ ...lot, favorite: false }) : lot
-    // ));
-    // return {
-    //   ...state,
-    //   lots: newLots,
-    // };
-    const lot = state.lots.find((l) => l.id === payload.id);
-    lot.favorite = false;
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { favorite: { $set: false } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.favorite = false;
   },
 });
 

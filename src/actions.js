@@ -15,12 +15,12 @@ export const favoriteLot = createAction('FAVORITE_LOT',
 export const unfavoriteLot = createAction('UNFAVORITE_LOT',
   (id) => ({ payload: { id } }));
 
-export const favoriteLotAsync = (id) => async (dispatch, getState, { api }) => {
+export const favoriteLotAsync = (id) => async (dispatch, _getState, { api }) => {
   await api.post(`/lots/${id}/favorite`);
   dispatch(favoriteLot(id));
 };
 
-export const unfavoriteLotAsync = (id) => async (dispatch, getState, { api }) => {
+export const unfavoriteLotAsync = (id) => async (dispatch, _getState, { api }) => {
   await api.post(`/lots/${id}/unfavorite`);
   dispatch(unfavoriteLot(id));
 };

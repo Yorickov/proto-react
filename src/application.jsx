@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import stream from './lib/utils';
@@ -10,10 +10,10 @@ import appReducer from './reducers';
 import * as actions from './actions';
 
 export default async () => {
-  const store = createStore(
-    appReducer,
-    applyMiddleware(thunk.withExtraArgument({ api })),
-  );
+  const store = configureStore({
+    reducer: appReducer,
+    middleware: [thunk.withExtraArgument({ api }), ...getDefaultMiddleware({ thunk: false })],
+  });
 
   ReactDOM.render(
     <Provider store={store}>
