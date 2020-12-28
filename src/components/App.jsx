@@ -1,12 +1,12 @@
 import React from 'react';
 import Header from './Header.jsx';
-import Clock from './Clock.jsx';
+import ClockContainer from './ClockContainer.jsx';
 import Lots from './Lots.jsx';
 
 const App = () => (
   <div className="app">
     <Header />
-    <Clock />
+    <ClockContainer />
     <Lots />
   </div>
 );

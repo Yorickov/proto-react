@@ -1,32 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Clock extends Component {
-  state = { time: new Date() };
+const Clock = ({ time }) => {
+  const isDay = time.getHours() >= 7 && time.getHours() <= 21;
 
-  tick = () => {
-    this.setState({ time: new Date() });
-  }
-
-  componentDidMount() {
-    this.timeInterval = setInterval(this.tick, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timeInterval);
-  }
-
-  render() {
-    const { time } = this.state;
-
-    const isDay = time.getHours() >= 7 && time.getHours() <= 21;
-
-    return (
-      <div className="clock">
-        <span className="value">{time.toLocaleTimeString()}</span>
-        <span className={isDay ? 'icon day' : 'icon night'} />
-      </div>
-    );
-  }
-}
+  return (
+    <div className="clock">
+      <span className="value">{time.toLocaleTimeString()}</span>
+      <span className={isDay ? 'icon day' : 'icon night'} />
+    </div>
+  );
+};
 
 export default Clock;
