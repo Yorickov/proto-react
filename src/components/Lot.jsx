@@ -2,30 +2,20 @@ import React from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import Favorite from './Favorite.jsx';
-import api from '../lib/api';
 import * as actions from '../actions';
 
-const mapDispatchToProps = (dispatch) => ({
-  favorite: (id) => async () => {
-    await api.post(`/lots/${id}/favorite`);
-    dispatch(actions.favoriteLot(id));
-  },
-  unfavorite: (id) => async () => {
-    await api.post(`/lots/${id}/unfavorite`);
-    dispatch(actions.unfavoriteLot(id));
-  },
-});
+const mapDispatchToProps = {
+  favorite: actions.favoriteLotAsync,
+  unfavorite: actions.unfavoriteLotAsync,
+};
 
 const Lot = ({ lot, favorite, unfavorite }) => {
-// ({ lot, favorite, unfavorite, dispatch }
-//   const favorite = (id) => async () => {
-//     await api.post(`/lots/${id}/favorite`);
-//     dispatch(actions.favoriteLot(id));
-//   };
-//   const unfavorite = (id) => async () => {
-//     await api.post(`/lots/${id}/unfavorite`);
-//     dispatch(actions.unfavoriteLot(id));
-//   }
+  // const handleFavorite = (id) => () => {
+  //   favorite(id);
+  // };
+  // const handleUnFavorite = (id) => () => {
+  //   unfavorite(id);
+  // };
 
   const articleClasses = cn({
     lot: true,
@@ -39,8 +29,8 @@ const Lot = ({ lot, favorite, unfavorite }) => {
       <p>{lot.description}</p>
       <Favorite
         active={lot.favorite}
-        favorite={favorite(lot.id)}
-        unfavorite={unfavorite(lot.id)}
+        favorite={() => favorite(lot.id)}
+        unfavorite={() => unfavorite(lot.id)}
       />
     </article>
   );

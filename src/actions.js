@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import api from './lib/api';
 
 export const setTime = createAction('SET_TIME',
   (time) => ({ payload: { time } }));
@@ -14,3 +15,13 @@ export const favoriteLot = createAction('FAVORITE_LOT',
 
 export const unfavoriteLot = createAction('UNFAVORITE_LOT',
   (id) => ({ payload: { id } }));
+
+export const favoriteLotAsync = (id) => async (dispatch) => {
+  await api.post(`/lots/${id}/favorite`);
+  dispatch(favoriteLot(id));
+};
+
+export const unfavoriteLotAsync = (id) => async (dispatch) => {
+  await api.post(`/lots/${id}/unfavorite`);
+  dispatch(unfavoriteLot(id));
+};

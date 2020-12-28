@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import stream from './lib/utils';
 import api from './lib/api';
@@ -9,7 +9,19 @@ import appReducer from './reducers';
 import * as actions from './actions';
 
 export default async () => {
-  const store = createStore(appReducer);
+  const functionalActionSupport = ({ dispatch, getState }) => (
+    (next) => (
+      (action) => {
+        if (typeof action === 'function') {
+          return action(dispatch, getState);
+        }
+        return next(action);
+      }));
+
+  const store = createStore(
+    appReducer,
+    applyMiddleware(functionalActionSupport),
+  );
 
   ReactDOM.render(
     <Provider store={store}>
