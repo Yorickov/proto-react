@@ -22,10 +22,6 @@ export default async () => {
     document.getElementById('root'),
   );
 
-  setInterval(() => {
-    store.dispatch(actions.setTime(new Date()));
-  }, 1000);
-
   const lots = await api.get('/lots');
   store.dispatch(actions.setLots(lots));
 

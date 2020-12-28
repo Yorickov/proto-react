@@ -1,19 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 
-const mapStateToProps = (state) => ({
-  time: state.clock.time,
-});
+class Clock extends Component {
+  state = { time: new Date() };
 
-const Clock = ({ time }) => {
-  const isDay = time.getHours() >= 7 && time.getHours() <= 21;
+  tick = () => {
+    this.setState({ time: new Date() });
+  }
 
-  return (
-    <div className="clock">
-      <span className="value">{time.toLocaleTimeString()}</span>
-      <span className={isDay ? 'icon day' : 'icon night'} />
-    </div>
-  );
-};
+  componentDidMount() {
+    this.timeInterval = setInterval(this.tick, 1000);
+  }
 
-export default connect(mapStateToProps)(Clock);
+  componentWillUnmount() {
+    clearInterval(this.timeInterval);
+  }
+
+  render() {
+    const { time } = this.state;
+
+    const isDay = time.getHours() >= 7 && time.getHours() <= 21;
+
+    return (
+      <div className="clock">
+        <span className="value">{time.toLocaleTimeString()}</span>
+        <span className={isDay ? 'icon day' : 'icon night'} />
+      </div>
+    );
+  }
+}
+
+export default Clock;

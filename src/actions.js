@@ -1,8 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
 
-export const setTime = createAction('SET_TIME',
-  (time) => ({ payload: { time } }));
-
 export const setLots = createAction('SET_LOTS',
   (lots) => ({ payload: { lots } }));
 

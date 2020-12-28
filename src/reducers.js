@@ -2,13 +2,6 @@ import update from 'immutability-helper';
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
 import * as actions from './actions';
 
-const clockReducer = createReducer({ time: new Date() }, {
-  [actions.setTime]: (state, { payload }) => ({
-    ...state,
-    time: payload.time,
-  }),
-});
-
 const auctionReducer = createReducer({ lots: null }, {
   [actions.setLots]: (state, { payload }) => ({
     ...state,
@@ -47,6 +40,5 @@ const auctionReducer = createReducer({ lots: null }, {
 });
 
 export default combineReducers({
-  clock: clockReducer,
   auction: auctionReducer,
 });
