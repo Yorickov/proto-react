@@ -2,10 +2,34 @@ import update from 'immutability-helper';
 import { createReducer, combineReducers } from '@reduxjs/toolkit';
 import * as actions from './actions';
 
-const auctionReducer = createReducer({ lots: null }, {
-  [actions.setLots]: (state, { payload }) => ({
+const auctionInitialState = {
+  lots: [],
+  loading: false,
+  loaded: false,
+  error: null,
+};
+
+const auctionReducer = createReducer(auctionInitialState, {
+  [actions.lotsLoadingPending]: (state) => ({
+    ...state,
+    lots: [],
+    loading: true,
+    loaded: false,
+    error: null,
+  }),
+  [actions.lotsLoadingSuccess]: (state, { payload }) => ({
     ...state,
     lots: payload.lots,
+    loading: false,
+    loaded: true,
+    error: null,
+  }),
+  [actions.lotsLoadingError]: (state, { payload }) => ({
+    ...state,
+    lots: [],
+    loading: false,
+    loaded: false,
+    error: payload.error,
   }),
   [actions.changeLotPrice]: (state, { payload }) => {
     const index = state.lots.findIndex((l) => l.id === payload.id);
