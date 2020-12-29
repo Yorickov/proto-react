@@ -10,10 +10,7 @@ const mapStateToProps = (state) => ({
 });
 
 const lotsMapDispatchToProps = {
-  load: () => async (dispatch, _getState, { api }) => {
-    const lots = await api.get('/lots');
-    dispatch(actions.setLots(lots));
-  },
+  load: actions.loadLotsAsync,
 };
 
 const Lots = ({ lots, loaded, load }) => {

@@ -12,12 +12,26 @@ export const favoriteLot = createAction('FAVORITE_LOT',
 export const unfavoriteLot = createAction('UNFAVORITE_LOT',
   (id) => ({ payload: { id } }));
 
-export const favoriteLotAsync = (id) => async (dispatch, _getState, { api }) => {
-  await api.post(`/lots/${id}/favorite`);
-  dispatch(favoriteLot(id));
-};
+export const favoriteLotAsync = (id) => (
+  async (dispatch, _getState, { api }) => {
+    await api.post(`/lots/${id}/favorite`);
+    dispatch(favoriteLot(id));
+  });
 
-export const unfavoriteLotAsync = (id) => async (dispatch, _getState, { api }) => {
-  await api.post(`/lots/${id}/unfavorite`);
-  dispatch(unfavoriteLot(id));
-};
+export const unfavoriteLotAsync = (id) => (
+  async (dispatch, _getState, { api }) => {
+    await api.post(`/lots/${id}/unfavorite`);
+    dispatch(unfavoriteLot(id));
+  });
+
+export const loadLotsAsync = () => (
+  async (dispatch, _getState, { api }) => {
+    const lots = await api.get('/lots');
+    dispatch(setLots(lots));
+  });
+
+export const subscribeToLotPrice = (id) => (
+  (dispatch, _getState, { stream }) => (
+    stream.subscribe(`price-${id}`, (data) => {
+      dispatch(changeLotPrice(data.id, data.price));
+    })));

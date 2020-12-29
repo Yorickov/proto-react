@@ -7,10 +7,7 @@ import * as actions from '../actions';
 const lotMapDispatchToProps = {
   favorite: actions.favoriteLotAsync,
   unfavorite: actions.unfavoriteLotAsync,
-  subscribe: (id) => (dispatch, _getState, { stream }) => (
-    stream.subscribe(`price-${id}`, (data) => {
-      dispatch(actions.changeLotPrice(data.id, data.price));
-    })),
+  subscribe: actions.subscribeToLotPrice,
 };
 
 const Lot = ({ lot, subscribe, favorite, unfavorite }) => {
