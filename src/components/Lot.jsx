@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import Favorite from './Favorite.jsx';
 import * as actions from '../actions';
 
-const actionCreators = {
+const lotMapDispatchToProps = {
   favorite: actions.favoriteLotAsync,
   unfavorite: actions.unfavoriteLotAsync,
+  subscribe: (id) => (dispatch, _getState, { stream }) => (
+    stream.subscribe(`price-${id}`, (data) => {
+      dispatch(actions.changeLotPrice(data.id, data.price));
+    })),
 };
 
-const Lot = ({ lot, favorite, unfavorite }) => {
+const Lot = ({ lot, subscribe, favorite, unfavorite }) => {
   // const handleFavorite = (id) => () => {
   //   favorite(id);
   // };
   // const handleUnFavorite = (id) => () => {
   //   unfavorite(id);
   // };
+
+  useEffect(() => subscribe(lot.id), [lot.id]);
 
   const articleClasses = cn({
     lot: true,
@@ -36,4 +42,4 @@ const Lot = ({ lot, favorite, unfavorite }) => {
   );
 };
 
-export default connect(null, actionCreators)(Lot);
+export default connect(null, lotMapDispatchToProps)(Lot);

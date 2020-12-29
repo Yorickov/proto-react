@@ -10,15 +10,9 @@ const mapStateToProps = (state) => ({
 });
 
 const lotsMapDispatchToProps = {
-  load: () => async (dispatch, _getState, { api, stream }) => {
+  load: () => async (dispatch, _getState, { api }) => {
     const lots = await api.get('/lots');
     dispatch(actions.setLots(lots));
-
-    lots.forEach((lot) => {
-      stream.subscribe(`price-${lot.id}`, ({ id, price }) => {
-        dispatch(actions.changeLotPrice(id, price));
-      });
-    });
   },
 };
 
