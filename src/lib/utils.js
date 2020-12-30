@@ -1,3 +1,5 @@
+import React from 'react';
+
 export default {
   subscribe(channel, listener) {
     const match = channel.match(/price-(\d+)/);
@@ -13,3 +15,5 @@ export default {
     }
   },
 };
+
+export const RouterContext = React.createContext();
