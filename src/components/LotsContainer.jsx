@@ -1,46 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import update from 'immutability-helper';
+import React, { useEffect, useReducer } from 'react';
 import Loading from './Loading.jsx';
 import Lots from './Lots.jsx';
 import AlertError from './AlertError.jsx';
 import stream from '../lib/utils';
 import api from '../lib/api';
+import auctionReducer from '../reducers';
+import * as actions from '../actions';
 
 const LotsContainer = () => {
-  const [items, setItems] = useState({
+  const [state, dispatch] = useReducer(auctionReducer, {
     lots: [],
     loading: false,
     loaded: false,
     error: null,
   });
 
-  const { loading, loaded, error } = items;
+  const { loading, loaded, error } = state;
 
   useEffect(async () => {
     if (!loaded && !loading && error === null) {
-      setItems({
-        ...items,
-        loading: true,
-        loaded: false,
-        error: null,
-      });
-
+      dispatch(actions.lotsLoadingPending());
       try {
         const lots = await api.get('/lots');
-        setItems({
-          ...items,
-          lots,
-          loading: false,
-          loaded: true,
-          error: null,
-        });
+        dispatch(actions.lotsLoadingSuccess(lots));
       } catch (e) {
-        setItems({
-          ...items,
-          loading: false,
-          loaded: false,
-          error: e.message,
-        });
+        dispatch(actions.lotsLoadingError(e.message));
       }
     }
   }, [loaded, loading, error]);
@@ -59,30 +43,22 @@ const LotsContainer = () => {
 
   const subscribe = (id) => (
     stream.subscribe(`price-${id}`, (data) => {
-      setItems((items) => {
-        const index = items.lots.findIndex((i) => i.id === data.id);
-        const newLots = update(items.lots, { [index]: { price: { $set: data.price } } });
-        return { ...items, lots: newLots };
-      });
+      dispatch(actions.changeLotPrice(data.id, data.price));
     }));
 
   const favorite = (id) => async () => {
     await api.post(`/lots/${id}/favorite`);
-    const index = items.lots.findIndex((l) => l.id === id);
-    const newLots = update(items.lots, { [index]: { favorite: { $set: true } } });
-    setItems({ ...items, lots: newLots });
+    dispatch(actions.favoriteLot(id));
   };
 
   const unfavorite = (id) => async () => {
     await api.post(`/lots/${id}/favorite`);
-    const index = items.lots.findIndex((l) => l.id === id);
-    const newLots = update(items.lots, { [index]: { favorite: { $set: false } } });
-    setItems({ ...items, lots: newLots });
+    dispatch(actions.unfavoriteLot(id));
   };
 
   return (
     <Lots
-      lots={items.lots}
+      lots={state.lots}
       subscribe={subscribe}
       favorite={favorite}
       unfavorite={unfavorite}
