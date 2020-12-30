@@ -80,6 +80,10 @@ body {
     font-size: 0.8rem;
     outline: none;
 
+    &:disabled {
+      cursor: wait;
+    }
+
     * {
       vertical-align: middle;
     }
@@ -88,12 +92,23 @@ body {
       background: #fff;
       border: 1px solid #999;
       color: #000;
+
+      &:disabled {
+        background: #fff;
+        border: 1px solid #ccc;
+        color: #ccc;
+      }
     }
 
     &.unfavorite {
       background: #fff;
       border: 1px solid #ff8c68;
       color: #dc0000;
+
+      &:disabled {
+        border: 1px solid #ffc0ad;
+        color: #ff8c68;
+      }
     }
   }
 }

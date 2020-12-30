@@ -11,10 +11,10 @@ const mapDispatchToProps = {
 
 const Lot = ({ lot, favorite, unfavorite }) => {
   // const handleFavorite = (id) => () => {
-  //   favorite(id);
+  //   actions.favorite(id);
   // };
   // const handleUnFavorite = (id) => () => {
-  //   unfavorite(id);
+  //   actions.unfavorite(id);
   // };
 
   const articleClasses = cn({
