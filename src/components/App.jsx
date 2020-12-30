@@ -1,14 +1,15 @@
 import React from 'react';
 import Header from './Header.jsx';
-import ClockContainer from './ClockContainer.jsx';
-import LotsContainer from './LotsContainer.jsx';
+import Content from './Content.jsx';
+import Router from '../lib/router/Router.jsx';
 
 const App = () => (
-  <div className="app">
-    <Header />
-    <ClockContainer />
-    <LotsContainer />
-  </div>
+  <Router>
+    <div className="app">
+      <Header />
+      <Content />
+    </div>
+  </Router>
 );
 
 export default App;

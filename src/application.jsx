@@ -8,7 +8,7 @@ import api from './lib/api';
 import App from './components/App.jsx';
 import appReducer from './reducers';
 
-export default async () => {
+export default () => {
   const store = configureStore({
     reducer: appReducer,
     middleware: [

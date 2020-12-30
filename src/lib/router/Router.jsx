@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { RouterContext } from '../utils';
 
 const Router = ({ children }) => {
-  const [location, setLocation] = useState('a');
+  const [location, setLocation] = useState('/');
 
   const navigate = (loc) => {
     setLocation(loc);
