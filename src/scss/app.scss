@@ -10,11 +10,53 @@ body {
 
 .header {
   margin-bottom: 10px;
+  display: flex;
 
   .logo {
     display: block;
     width: 96px;
     height: 96px;
+  }
+
+  nav {
+    margin-left: auto;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        margin: 0 15px 0 0;
+        padding: 0;
+        display: inline-block;
+
+        &:last-child {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+a {
+  color: #000;
+}
+
+.page {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 10px;
+
+  h1 {
+    margin: 0 0 20px 0;
+    padding: 0;
+    line-height: 1;
+
+    &:last-child {
+      margin: 0;
+    }
   }
 }
 
@@ -125,4 +167,15 @@ body {
   border-radius: 6px;
   background: #ff5252;
   color: #fff;
+  display: flex;
+
+  span, ion-icon {
+    display: flex;
+    vertical-align: middle;
+  }
+
+  ion-icon {
+    margin-left: auto;
+    cursor: pointer;
+  }
 }

@@ -6,6 +6,10 @@ dev:
 
 build:
 	rm -rf public
+	npx webpack
+
+prod:
+	rm -rf public
 	NODE_ENV=production npx webpack
 
 lint:
