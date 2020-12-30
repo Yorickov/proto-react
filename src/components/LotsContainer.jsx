@@ -1,31 +1,27 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import Loading from './Loading.jsx';
 import Lots from './Lots.jsx';
 import AlertError from './AlertError.jsx';
-import stream from '../lib/utils';
-import api from '../lib/api';
-import auctionReducer from '../reducers';
 import * as actions from '../actions';
 
-const LotsContainer = () => {
-  const [state, dispatch] = useReducer(auctionReducer, {
-    lots: [],
-    loading: false,
-    loaded: false,
-    error: null,
-  });
+const mapStateToProps = (state) => ({
+  lots: state.auction.lots,
+  loading: state.auction.loading,
+  loaded: state.auction.loaded,
+  error: state.auction.error,
+});
 
-  const { loading, loaded, error } = state;
+const mapDispatchToProps = {
+  load: actions.loadLotsAsync,
+};
 
-  useEffect(async () => {
+const LotsContainer = ({
+  lots, loading, loaded, error, load,
+}) => {
+  useEffect(() => {
     if (!loaded && !loading && error === null) {
-      dispatch(actions.lotsLoadingPending());
-      try {
-        const lots = await api.get('/lots');
-        dispatch(actions.lotsLoadingSuccess(lots));
-      } catch (e) {
-        dispatch(actions.lotsLoadingError(e.message));
-      }
+      load();
     }
   }, [loaded, loading, error]);
 
@@ -41,29 +37,7 @@ const LotsContainer = () => {
     return null;
   }
 
-  const subscribe = (id) => (
-    stream.subscribe(`price-${id}`, (data) => {
-      dispatch(actions.changeLotPrice(data.id, data.price));
-    }));
-
-  const favorite = (id) => async () => {
-    await api.post(`/lots/${id}/favorite`);
-    dispatch(actions.favoriteLot(id));
-  };
-
-  const unfavorite = (id) => async () => {
-    await api.post(`/lots/${id}/favorite`);
-    dispatch(actions.unfavoriteLot(id));
-  };
-
-  return (
-    <Lots
-      lots={state.lots}
-      subscribe={subscribe}
-      favorite={favorite}
-      unfavorite={unfavorite}
-    />
-  );
+  return <Lots lots={lots} />;
 };
 
-export default LotsContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(LotsContainer);

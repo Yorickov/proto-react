@@ -1,17 +1,9 @@
 import React from 'react';
 import LotContainer from './LotContainer.jsx';
 
-const Lots = ({ lots, subscribe, favorite, unfavorite }) => (
+const Lots = ({ lots }) => (
   <div className="lots">
-    {lots.map((lot) => (
-      <LotContainer
-        lot={lot}
-        subscribe={subscribe}
-        favorite={favorite}
-        unfavorite={unfavorite}
-        key={lot.id}
-      />
-    ))}
+    {lots.map((lot) => <LotContainer lot={lot} key={lot.id} />)}
   </div>
 );
 

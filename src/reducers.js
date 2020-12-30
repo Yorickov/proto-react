@@ -1,58 +1,68 @@
 import update from 'immutability-helper';
+import { createReducer, combineReducers } from '@reduxjs/toolkit';
+import * as actions from './actions';
 
-const auctionReducer = (state, { type, payload }) => {
-  switch (type) {
-    case 'LOTS_LOADING_PENDING':
-      return {
-        ...state,
-        lots: [],
-        loading: true,
-        loaded: false,
-        error: null,
-      };
-
-    case 'LOTS_LOADING_SUCCESS':
-      return {
-        ...state,
-        lots: payload.lots,
-        loading: false,
-        loaded: true,
-        error: null,
-      };
-
-    case 'LOTS_LOADING_ERROR':
-      return {
-        ...state,
-        lots: [],
-        loading: false,
-        loaded: false,
-        error: payload.error,
-      };
-
-    case 'CHANGE_LOT_PRICE':
-      const priceIdx = state.lots.findIndex((l) => l.id === payload.id);
-      return {
-        ...state,
-        lots: update(state.lots, { [priceIdx]: { price: { $set: payload.price } } }),
-      };
-
-    case 'FAVORITE_LOT':
-      const favIdx = state.lots.findIndex((l) => l.id === payload.id);
-      return {
-        ...state,
-        lots: update(state.lots, { [favIdx]: { favorite: { $set: true } } }),
-      };
-
-    case 'UNFAVORITE_LOT':
-      const unfavIdx = state.lots.findIndex((l) => l.id === payload.id);
-      return {
-        ...state,
-        lots: update(state.lots, { [unfavIdx]: { favorite: { $set: false } } }),
-      };
-
-    default:
-      return state;
-  }
+const auctionInitialState = {
+  lots: [],
+  loading: false,
+  loaded: false,
+  error: null,
 };
 
-export default auctionReducer;
+const auctionReducer = createReducer(auctionInitialState, {
+  [actions.lotsLoadingPending]: (state) => ({
+    ...state,
+    lots: [],
+    loading: true,
+    loaded: false,
+    error: null,
+  }),
+  [actions.lotsLoadingSuccess]: (state, { payload }) => ({
+    ...state,
+    lots: payload.lots,
+    loading: false,
+    loaded: true,
+    error: null,
+  }),
+  [actions.lotsLoadingError]: (state, { payload }) => ({
+    ...state,
+    lots: [],
+    loading: false,
+    loaded: false,
+    error: payload.error,
+  }),
+  [actions.changeLotPrice]: (state, { payload }) => {
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { price: { $set: payload.price } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.price = payload.price;
+  },
+  [actions.favoriteLot]: (state, { payload }) => {
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { favorite: { $set: true } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.favorite = true;
+  },
+  [actions.unfavoriteLot]: (state, { payload }) => {
+    const index = state.lots.findIndex((l) => l.id === payload.id);
+    const newLots = update(state.lots, { [index]: { favorite: { $set: false } } });
+    return {
+      ...state,
+      lots: newLots,
+    };
+    // const lot = state.lots.find((l) => l.id === payload.id);
+    // lot.favorite = false;
+  },
+});
+
+export default combineReducers({
+  auction: auctionReducer,
+});
