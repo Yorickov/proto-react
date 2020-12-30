@@ -1,11 +1,16 @@
 import React from 'react';
 import Logo from './Logo.jsx';
-import Router from './router/Router.jsx';
+import Nav from './Nav.jsx';
+import Content from './Content.jsx';
+import Router from '../lib/router/Router.jsx';
 
 const Header = () => (
   <header className="header">
     <Logo />
-    <Router />
+    <Router>
+      <Nav />
+      <Content />
+    </Router>
   </header>
 );
 

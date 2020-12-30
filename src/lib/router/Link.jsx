@@ -1,14 +1,14 @@
 import React from 'react';
-import { RouterContext } from '../../lib/utils';
+import { RouterContext } from '../utils';
 
-const Link = ({ to, children }) => (
+const Link = ({ to, children, ...options }) => (
   <RouterContext.Consumer>
     {(value) => {
       const handleClick = (e) => {
         e.preventDefault();
         value.navigate(to);
       };
-      return <a href="" onClick={handleClick}>{children}</a>;
+      return <a href="" onClick={handleClick} {...options}>{children}</a>;
     }}
   </RouterContext.Consumer>
 );

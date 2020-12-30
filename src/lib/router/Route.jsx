@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouterContext } from '../../lib/utils';
+import { RouterContext } from '../utils';
 
 const Route = ({ path, children }) => (
   <RouterContext.Consumer>
