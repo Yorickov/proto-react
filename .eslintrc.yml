@@ -34,3 +34,5 @@ rules:
   react/display-name: 0
   consistent-return: 0
   no-case-declarations: 0
+  no-useless-escape: 0
+  react/no-children-prop: 0

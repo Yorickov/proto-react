@@ -17,3 +17,10 @@ export default {
 };
 
 export const RouterContext = React.createContext();
+
+export const matchPath = (location, path) => {
+  const pattern = path.replace(/:[^/]+/i, (m) => `(?<${m.slice(1)}>[\\w-]+)`);
+  const regexp = new RegExp(`^${pattern}$`);
+  // return regexp.exec(location);
+  return location.match(regexp);
+};

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import cn from 'classnames';
 import Favorite from './Favorite.jsx';
 import * as actions from '../actions';
+import Link from '../lib/router/Link.jsx';
 
 const mapDispatchToProps = {
   favorite: actions.favoriteLotAsync,
@@ -25,7 +26,9 @@ const Lot = ({ lot, favorite, unfavorite }) => {
   return (
     <article className={articleClasses}>
       <div className="price">{lot.price}</div>
-      <h1>{lot.name}</h1>
+      <h1>
+        <Link to={`/lots/${lot.id}`}>{lot.name}</Link>
+      </h1>
       <p>{lot.description}</p>
       <Favorite
         active={lot.favorite}
