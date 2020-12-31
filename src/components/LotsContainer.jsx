@@ -26,7 +26,7 @@ const LotsContainer = ({
   }, [loaded, loading, error]);
 
   if (error !== null) {
-    return <AlertError message={error} />;
+    return <AlertError message={error} retry={load} />;
   }
 
   if (loading) {
