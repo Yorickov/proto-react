@@ -4,7 +4,9 @@ import { RouterContext, matchPath } from './utils';
 const Route = (props) => (
   <RouterContext.Consumer>
     {(value) => {
-      const match = matchPath(value.location, props);
+      const match = props.computedMatch ? props.computedMatch
+        : matchPath(value.location, props);
+
       if (match) {
         return <RouterContext.Provider
           value={{
