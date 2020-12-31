@@ -14,16 +14,23 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   load: actions.loadLotsAsync,
+  unload: actions.lotsClear,
 };
 
 const LotsContainer = ({
-  lots, loading, loaded, error, load,
+  lots, loading, loaded, error, load, unload,
 }) => {
   useEffect(() => {
     if (!loaded && !loading && error === null) {
       load();
     }
   }, [loaded, loading, error]);
+
+  useEffect(() => {
+    if (loaded || error !== null) {
+      return unload;
+    }
+  }, [loaded, error]);
 
   if (error !== null) {
     return <AlertError message={error} retry={load} />;

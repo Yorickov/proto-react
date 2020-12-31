@@ -1,5 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 
+export const lotsClear = createAction('LOTS_CLEAR');
+
 export const lotsLoadingPending = createAction('LOTS_LOADING_PENDING');
 
 export const lotsLoadingSuccess = createAction('LOTS_LOADING_SUCCESS',

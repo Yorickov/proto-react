@@ -10,6 +10,13 @@ const auctionInitialState = {
 };
 
 const auctionReducer = createReducer(auctionInitialState, {
+  [actions.lotsClear]: (state) => ({
+    ...state,
+    lots: [],
+    loading: false,
+    loaded: false,
+    error: null,
+  }),
   [actions.lotsLoadingPending]: (state) => ({
     ...state,
     lots: [],
