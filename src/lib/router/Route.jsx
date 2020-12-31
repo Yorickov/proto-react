@@ -1,17 +1,17 @@
 import React from 'react';
-import { RouterContext, matchPath } from '../utils';
+import { RouterContext, matchPath } from './utils';
 
-const Route = ({ path, children }) => (
+const Route = (props) => (
   <RouterContext.Consumer>
     {(value) => {
-      const match = matchPath(value.location, path);
+      const match = matchPath(value.location, props);
       if (match) {
         return <RouterContext.Provider
           value={{
             ...value,
             match,
           }}
-          children={children}
+          children={props.children}
         />;
       }
       return null;

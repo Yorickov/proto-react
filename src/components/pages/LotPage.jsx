@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { RouterContext } from '../../lib/utils';
+import React from 'react';
+import { useParams } from '../../lib/router/utils';
 import Page from './Page.jsx';
 
 const LotPage = () => {
-  const router = useContext(RouterContext);
+  const params = useParams();
   return (
     <Page>
-      <h1>Lot #{router.match.groups.id}</h1>
+      <h1>Lot #{params.id}</h1>
       <p>Lot description</p>
     </Page>
   );

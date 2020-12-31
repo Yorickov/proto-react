@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouterContext } from '../utils';
+import { RouterContext } from './utils';
 
 const Link = ({ to, children, ...options }) => (
   <RouterContext.Consumer>

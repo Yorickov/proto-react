@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RouterContext } from '../utils';
+import { RouterContext } from './utils';
 
 const Router = ({ children }) => {
   const [location, setLocation] = useState('/');

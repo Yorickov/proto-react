@@ -7,16 +7,16 @@ import HelpPage from './pages/HelpPage.jsx';
 
 const Content = () => (
   <>
-    <Route path="/">
+    <Route path="/" exact>
       <HomePage />
     </Route>
-    <Route path="/lots">
+    <Route path="/lots" exact>
       <LotsPage />
     </Route>
-    <Route path="/lots/:id">
+    <Route path="/lots/:id" exact>
       <LotPage />
     </Route>
-    <Route path="/help">
+    <Route path="/help" exact>
       <HelpPage />
     </Route>
   </>
