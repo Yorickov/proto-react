@@ -1,33 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { RouterContext } from './utils';
 
-const Router = ({ children }) => {
-  const { state } = window.history;
-  const [location, setLocation] = useState(
-    state ? state.location : window.location.pathname,
-  );
+const Router = ({ children, history }) => {
+  const [location, setLocation] = useState(history.location);
 
-  useEffect(() => {
-    const listener = (event) => {
-      const { state } = event;
-      setLocation(state ? state.location : window.location.pathname);
-    };
-    window.addEventListener('popstate', listener, false);
-    return () => {
-      window.removeEventListener('popstate', listener);
-    };
-  }, [setLocation]);
-
-  const navigate = (location) => {
-    const state = { location };
-    window.history.pushState(state, '', location);
-    window.dispatchEvent(new PopStateEvent('popstate', { state }));
-  };
-
-  const createHref = (path) => path;
+  useEffect(() => (
+    history.listen((location) => {
+      setLocation(location);
+    })
+  ), [history, setLocation]);
 
   return (
-    <RouterContext.Provider value={{ location, navigate, createHref }}>
+    <RouterContext.Provider value={{ location, history }}>
       {children}
     </RouterContext.Provider>
   );

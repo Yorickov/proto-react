@@ -1,6 +1,6 @@
-import React from 'react';
+import { createContext, useContext } from 'react';
 
-export const RouterContext = React.createContext();
+export const RouterContext = createContext();
 
 export const matchPath = (location, params) => {
   const pattern = params.path.replace(/:[^/]+/i, (m) => `(?<${m.slice(1)}>[\\w-]+)`);
@@ -9,6 +9,6 @@ export const matchPath = (location, params) => {
 };
 
 export const useParams = () => {
-  const router = React.useContext(RouterContext);
+  const router = useContext(RouterContext);
   return router.match.groups;
 };
