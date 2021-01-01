@@ -36,3 +36,4 @@ rules:
   no-case-declarations: 0
   no-useless-escape: 0
   react/no-children-prop: 0
+  no-shadow: 0
