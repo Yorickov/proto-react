@@ -1,12 +1,12 @@
 import React from 'react';
-import Link from '../lib/router/Link.jsx';
+import { NavLink } from 'react-router-dom';
 
 const Nav = () => (
   <nav>
     <ul>
-      <li><Link to="/">Home</Link></li>
-      <li><Link to="/lots">Lots</Link></li>
-      <li><Link to="/help">Help</Link></li>
+      <li><NavLink to="/" exact>Home</NavLink></li>
+      <li><NavLink to="/lots">Lots</NavLink></li>
+      <li><NavLink to="/help" exact>Help</NavLink></li>
     </ul>
   </nav>
 );

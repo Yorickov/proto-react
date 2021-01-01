@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from '../../lib/router/utils';
+import { useParams } from 'react-router-dom';
 import Page from './Page.jsx';
 
 const LotPage = () => {

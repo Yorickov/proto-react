@@ -1,9 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import Favorite from './Favorite.jsx';
 import * as actions from '../actions';
-import Link from '../lib/router/Link.jsx';
 
 const mapDispatchToProps = {
   favorite: actions.favoriteLotAsync,

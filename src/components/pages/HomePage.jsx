@@ -1,6 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Page from './Page.jsx';
-import Link from '../../lib/router/Link.jsx';
 
 const HomePage = () => (
   <Page>

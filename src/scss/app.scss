@@ -35,6 +35,10 @@ body {
         &:last-child {
           margin: 0;
         }
+
+        a.active {
+          font-weight: bold;
+        }
       }
     }
   }
