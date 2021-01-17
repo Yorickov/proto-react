@@ -1,21 +1,36 @@
+up: docker-up
+down: docker-down
+
 install:
-	npm i
+	npm ci
 
 dev:
 	npx webpack serve
 
-build:
-	rm -rf public
-	npx webpack
+prod: docker-down build-frontend build-server docker-up
 
-prod:
-	rm -rf public
+deploy: webpack-prod build-prod
+	docker-compose -f docker-compose-production.yml up --remove-orphans -d
+
+build-frontend: clean
 	NODE_ENV=production npx webpack
+
+build-server:
+	docker build --file=docker/nginx/Dockerfile --tag=proto-react-nginx .
+
+docker-up:
+	docker-compose up -d
+
+docker-down:
+	docker-compose down --remove-orphans
 
 lint:
 	npx eslint .
 
 push:
 	git push -u origin main
+
+clean:
+	rm -rf public
 
 .PHONY: test

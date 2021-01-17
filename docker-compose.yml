@@ -1,9 +1,7 @@
-version: "3.7"
+version: "3.8"
 services:
   nginx:
-    image: nginx:alpine
-    volumes:
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d
-      - ./public:/app/public
+    image: proto-react-nginx
     ports:
       - "8080:80"
+    container_name: proto-react-prod
